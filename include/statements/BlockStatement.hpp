@@ -16,6 +16,11 @@ class BlockStatement: public Statement
 public:
     BlockStatement(std::vector<std::unique_ptr<Statement>> statements) : statements(std::move(statements)) {}
 
+    void accept(Interpreter& visitor) override
+    {
+        visitor.visit(*this);
+    }
+
     virtual std::string toString() const override
     {
         std::string result;

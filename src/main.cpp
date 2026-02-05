@@ -18,5 +18,11 @@ int main()
         std::cout << statement->toString() << std::endl;
     }
 
+    ConcreteInterpreter interpreter;
+    forStatement->accept(interpreter);
+
+    // Optional: Variablen ausgeben
+    interpreter.printVariables();
+
     return 0;
 }

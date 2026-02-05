@@ -23,6 +23,8 @@ add_executable(C3PO
         include/statements/ForLoopStatement.hpp
         include/statements/BlockStatement.hpp
         include/statements/ProgramStatement.hpp
+        include/visitor/Visitor.hpp
+        src/visitor/Visitor.cpp
 )
 
 target_include_directories(C3PO PUBLIC include)
