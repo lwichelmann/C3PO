@@ -23,6 +23,10 @@ public:
     {
     }
 
+    void accept(Visitor& visitor) override {
+        visitor.visit(*this);
+    }
+
     const std::string& getVariableName() const { return m_variableName; }
     const std::optional<Token>& getInitialValue() const { return m_initialValue; }
 

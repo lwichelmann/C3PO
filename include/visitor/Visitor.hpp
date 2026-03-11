@@ -2,13 +2,13 @@
 // Created by leonw on 27.01.2026.
 //
 
-#ifndef C3PO_VISTOR_HPP
-#define C3PO_VISTOR_HPP
-#include "expressions/ExpressionStatement.hpp"
-#include "statements/ForLoopStatement.hpp"
-#include "statements/VariableDeclarationStatement.hpp"
-#include "statements/BlockStatement.hpp"
-
+#ifndef C3PO_VISITOR_HPP
+#define C3PO_VISITOR_HPP
+class VariableDeclarationStatement;
+class ForLoopStatement;
+class BlockStatement;
+class ExpressionStatement;
+class ProgramStatement;
 
 class Visitor
 {
@@ -19,6 +19,7 @@ public:
     virtual void visit(ForLoopStatement& stmt) = 0;
     virtual void visit(BlockStatement& stmt) = 0;
     virtual void visit(ExpressionStatement& stmt) = 0;
+    virtual void visit(ProgramStatement& stmt) = 0;
 };
 
-#endif //C3PO_VISTOR_HPP
+#endif //C3PO_VISITOR_HPP

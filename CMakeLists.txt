@@ -10,21 +10,14 @@ add_executable(C3PO
         src/Parser.cpp
         src/statements/VariableDeclarationStatement.cpp
         src/statements/Statement.cpp
-        include/Lexer.hpp
-        include/FileUtil.hpp
-        include/Token.hpp
-        include/Parser.hpp
-        include/statements/VariableDeclarationStatement.hpp
-        include/statements/Statement.hpp
-        include/expressions/ExpressionStatement.hpp
-        include/expressions/ExpressionStatement.hpp
-        include/expressions/Expression.hpp
-        include/expressions/LiteralExpression.hpp
-        include/statements/ForLoopStatement.hpp
-        include/statements/BlockStatement.hpp
-        include/statements/ProgramStatement.hpp
-        include/visitor/Visitor.hpp
         src/visitor/Visitor.cpp
+        src/statements/BlockStatement.cpp
 )
 
+
+target_include_directories(C3PO PUBLIC include/expressions)
+
+target_include_directories(C3PO PUBLIC include/statements)
+
+target_include_directories(C3PO PUBLIC include/visitor)
 target_include_directories(C3PO PUBLIC include)

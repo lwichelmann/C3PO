@@ -7,6 +7,8 @@
 #include <memory>
 #include <vector>
 #include <string>
+
+#include "BlockStatement.hpp"
 #include "Statement.hpp"
 
 class ForLoopStatement : public Statement
@@ -18,6 +20,9 @@ public:
     {
     }
 
+void accept(Visitor& visitor) override {
+        visitor.visit(*this);
+    }
 
     virtual std::string toString() const override
     {

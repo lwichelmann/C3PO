@@ -7,8 +7,11 @@
 
 #include <memory>
 
-#include "statements/Statement.hpp"
 #include "Expression.hpp"
+#include "Statement.hpp"
+//#include "expressions/Expression.hpp"
+//#include "statements/Statement.hpp"
+#include "Statement.hpp"
 
 class ExpressionStatement: public Statement
 {
@@ -18,7 +21,12 @@ public:
     ExpressionStatement(std::unique_ptr<Expression> expression)
         : m_expression(std::move(expression)) {}
 
-    std::string toString() const override {
+    void accept(Visitor& visitor) override {
+        visitor.visit(*this);
+    }
+
+    std::string toString() const
+    {
         return m_expression->toString() + ";";
     }
 

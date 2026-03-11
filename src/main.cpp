@@ -3,6 +3,7 @@
 #include "../include/Lexer.hpp"
 #include "../include/FileUtil.hpp"
 #include "../include/Parser.hpp"
+#include "../include/visitor/ConcreteInterpreter.hpp"
 
 int main()
 {
@@ -19,9 +20,8 @@ int main()
     }
 
     ConcreteInterpreter interpreter;
-    forStatement->accept(interpreter);
+    programm->accept(interpreter);
 
-    // Optional: Variablen ausgeben
     interpreter.printVariables();
 
     return 0;

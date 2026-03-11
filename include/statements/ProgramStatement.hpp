@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "Statement.hpp"
+#include "visitor/Visitor.hpp"
 
 class ProgramStatement : public Statement
 {
@@ -16,6 +17,11 @@ class ProgramStatement : public Statement
 public:
     ProgramStatement(std::vector<std::unique_ptr<Statement>> statements) : m_statements(std::move(statements))
     {
+    }
+
+    void accept(Visitor& visitor) override
+    {
+        visitor.visit(*this);
     }
 
     std::string toString() const override
