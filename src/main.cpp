@@ -1,3 +1,4 @@
+#include <filesystem>
 #include <iostream>
 #include "../include/Token.hpp"
 #include "../include/Lexer.hpp"
@@ -5,9 +6,16 @@
 #include "../include/Parser.hpp"
 #include "../include/visitor/ConcreteInterpreter.hpp"
 
-int main()
+int main(int argc, char* argv[])
 {
-    auto content = FileUtil::read_file("../src/source.txt");
+    std::string filePath = "../src/source.txt";
+    if (argc > 1 && std::filesystem::exists(argv[1]))
+    {
+        filePath = argv[1];
+    }
+
+
+    auto content = FileUtil::read_file(filePath);
     Lexer lexer(content);
     auto tokens = lexer.lex();
 
