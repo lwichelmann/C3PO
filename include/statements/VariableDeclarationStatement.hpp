@@ -9,7 +9,7 @@
 #include <memory>
 #include <variant>
 #include "Statement.hpp"
-#include "Token.hpp"
+#include "../token/Token.hpp"
 
 class VariableDeclarationStatement : public Statement
 {

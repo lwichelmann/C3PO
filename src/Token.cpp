@@ -1,7 +1,7 @@
 //
 // Created by leonw on 25.09.2025.
 //
-#include "../include/Token.hpp"
+#include "../include/token/Token.hpp"
 
 std::string Token::typeToString(TokenType type)
 {

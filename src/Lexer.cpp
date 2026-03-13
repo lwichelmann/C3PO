@@ -1,8 +1,8 @@
 //
 // Created by leonw on 25.09.2025.
 //
-#include "../include/Lexer.hpp"
-#include "../include/Token.hpp"
+#include "../include/lexer/Lexer.hpp"
+#include "../include/token/Token.hpp"
 
 void Lexer::advance()
 {

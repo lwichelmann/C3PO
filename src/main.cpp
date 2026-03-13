@@ -1,9 +1,9 @@
 #include <filesystem>
 #include <iostream>
-#include "../include/Token.hpp"
-#include "../include/Lexer.hpp"
-#include "../include/FileUtil.hpp"
-#include "../include/Parser.hpp"
+#include "../include/fileutil/FileUtil.hpp"
+#include "../include/token/Token.hpp"
+#include "../include/lexer/Lexer.hpp"
+#include "../include/parser/Parser.hpp"
 #include "../include/visitor/ConcreteInterpreter.hpp"
 
 int main(int argc, char* argv[])

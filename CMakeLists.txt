@@ -12,6 +12,7 @@ add_executable(C3PO
         src/statements/Statement.cpp
         src/visitor/Visitor.cpp
         src/statements/BlockStatement.cpp
+        src/fileutil/FileUtil.cpp
 )
 
 

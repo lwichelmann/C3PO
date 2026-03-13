@@ -2,7 +2,7 @@
 // Created by leonw on 05.10.2025.
 //
 
-#include "../include/Parser.hpp"
+#include "../include/parser/Parser.hpp"
 
 #include <iostream>
 

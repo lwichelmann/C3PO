@@ -6,11 +6,11 @@
 #define C3PO_PARSER_HPP
 #include <vector>
 
-#include "Token.hpp"
-#include "statements/BlockStatement.hpp"
-#include "statements/ForLoopStatement.hpp"
-#include "statements/ProgramStatement.hpp"
-#include "statements/Statement.hpp"
+#include "../token/Token.hpp"
+#include "../statements/BlockStatement.hpp"
+#include "../statements/ForLoopStatement.hpp"
+#include "../statements/ProgramStatement.hpp"
+#include "../statements/Statement.hpp"
 
 class Parser
 {
