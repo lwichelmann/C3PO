@@ -21,3 +21,7 @@ target_include_directories(C3PO PUBLIC include/statements)
 
 target_include_directories(C3PO PUBLIC include/visitor)
 target_include_directories(C3PO PUBLIC include)
+
+if(MINGW)
+    target_link_options(C3PO PRIVATE -static)
+endif()
