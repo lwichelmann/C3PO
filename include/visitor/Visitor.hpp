@@ -4,6 +4,8 @@
 
 #ifndef C3PO_VISITOR_HPP
 #define C3PO_VISITOR_HPP
+
+class FunctionDeclarationStatement;
 class VariableDeclarationStatement;
 class ForLoopStatement;
 class BlockStatement;
@@ -20,6 +22,7 @@ public:
     virtual void visit(BlockStatement& stmt) = 0;
     virtual void visit(ExpressionStatement& stmt) = 0;
     virtual void visit(ProgramStatement& stmt) = 0;
+    virtual void visit(FunctionDeclarationStatement& stmt) = 0;
 };
 
 #endif //C3PO_VISITOR_HPP

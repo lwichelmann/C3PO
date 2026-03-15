@@ -6,13 +6,15 @@ set(CMAKE_CXX_STANDARD 26)
 add_executable(C3PO
         src/main.cpp
         src/Lexer.cpp
-        src/Token.cpp
-        src/Parser.cpp
+        src/parser/Parser.cpp
         src/statements/VariableDeclarationStatement.cpp
         src/statements/Statement.cpp
         src/visitor/Visitor.cpp
         src/statements/BlockStatement.cpp
+        src/statements/FunctionDeclarationStatement.cpp
+        src/statements/ForLoopStatement.cpp
         src/fileutil/FileUtil.cpp
+        src/token/Token.cpp
 )
 
 
@@ -24,5 +26,5 @@ target_include_directories(C3PO PUBLIC include/visitor)
 target_include_directories(C3PO PUBLIC include)
 
 if(MINGW)
-    target_link_options(C3PO PRIVATE -static)
+    target_link_options(C3PO PRIVATE -static -static-libgcc -static-libstdc++ -Wl,--allow-multiple-definition)
 endif()

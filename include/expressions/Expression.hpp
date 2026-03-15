@@ -4,6 +4,7 @@
 
 #ifndef C3PO_EXPRESSION_HPP
 #define C3PO_EXPRESSION_HPP
+#include <string>
 
 class Expression
 {

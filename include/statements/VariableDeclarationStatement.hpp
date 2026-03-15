@@ -17,41 +17,13 @@ class VariableDeclarationStatement : public Statement
     std::optional<Token> m_initialValue;
 
 public:
-    VariableDeclarationStatement(std::string name, Token value)
-        : m_variableName(std::move(name))
-        , m_initialValue(std::move(value))
-    {
-    }
+    VariableDeclarationStatement(const std::string& name, const Token& value);
 
-    void accept(Visitor& visitor) override {
-        visitor.visit(*this);
-    }
+    void accept(Visitor& visitor) override;
+    const std::string& getVariableName() const;
+    const std::optional<Token>& getInitialValue() const;
 
-    const std::string& getVariableName() const { return m_variableName; }
-    const std::optional<Token>& getInitialValue() const { return m_initialValue; }
-
-    std::string toString() const override
-    {
-        std::string valueStr = "null";
-
-        if (m_initialValue.has_value())
-        {
-            const Token& token = m_initialValue.value();
-
-            std::visit([&valueStr](const auto& val) {
-                if constexpr (std::is_same_v<decltype(val), const int&>)
-                {
-                    valueStr = std::to_string(val);
-                }
-                else
-                {
-                    valueStr = "\"" + val + "\"";
-                }
-            }, token.getValue());
-        }
-
-        return "VariableDeclarationStatement(" + m_variableName + " = " + valueStr + ")";
-    }
+    std::string toString() const override;
 };
 
 #endif //C3PO_VARIABLEDECLARATIONSTATEMENT_HPP

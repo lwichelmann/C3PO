@@ -9,19 +9,19 @@
 
 #include "Expression.hpp"
 #include "Statement.hpp"
-//#include "expressions/Expression.hpp"
-//#include "statements/Statement.hpp"
-#include "Statement.hpp"
 
-class ExpressionStatement: public Statement
+class ExpressionStatement : public Statement
 {
     std::unique_ptr<Expression> m_expression{};
 
 public:
     ExpressionStatement(std::unique_ptr<Expression> expression)
-        : m_expression(std::move(expression)) {}
+        : m_expression(std::move(expression))
+    {
+    }
 
-    void accept(Visitor& visitor) override {
+    void accept(Visitor& visitor) override
+    {
         visitor.visit(*this);
     }
 

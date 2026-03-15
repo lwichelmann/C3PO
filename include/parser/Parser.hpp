@@ -11,6 +11,7 @@
 #include "../statements/ForLoopStatement.hpp"
 #include "../statements/ProgramStatement.hpp"
 #include "../statements/Statement.hpp"
+#include "../statements/FunctionDeclarationStatement.hpp"
 
 class Parser
 {
@@ -25,6 +26,7 @@ public:
     }
 
     std::unique_ptr<Statement> parseVariableStatement();
+    std::unique_ptr<FunctionDeclarationStatement> parseFunctionDeclarationStatement();
     std::unique_ptr<ProgramStatement> parse();
     Token peek();
     Token consume(TokenType type);

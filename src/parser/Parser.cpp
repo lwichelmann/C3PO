@@ -2,11 +2,12 @@
 // Created by leonw on 05.10.2025.
 //
 
-#include "../include/parser/Parser.hpp"
+#include "../../include/parser/Parser.hpp"
 
 #include <iostream>
 
-#include "../include/statements/VariableDeclarationStatement.hpp"
+#include "FunctionDeclarationStatement.hpp"
+#include "../../include/statements/VariableDeclarationStatement.hpp"
 #include "statements/ForLoopStatement.hpp"
 #include "statements/ProgramStatement.hpp"
 
@@ -55,6 +56,9 @@ std::unique_ptr<ProgramStatement> Parser::parse()
         else if (currentToken().getType() == TokenType::VAR)
         {
             statements.push_back(parseVariableStatement());
+        }else if (currentToken().getType() == TokenType::FUNCTION)
+        {
+            statements.push_back(parseFunctionDeclarationStatement());
         }
     }
 
@@ -122,7 +126,30 @@ std::unique_ptr<Statement> Parser::parseVariableStatement()
     consume(TokenType::SEMICOLON);
 
     std::string identifierString = std::get<std::string>(tokenIdentifier.getValue());
-
-    // ✅ Einfach den kompletten Token übergeben!
     return std::make_unique<VariableDeclarationStatement>(identifierString, valueToken);
+}
+
+std::unique_ptr<FunctionDeclarationStatement> Parser::parseFunctionDeclarationStatement()
+{
+    std::unique_ptr<BlockStatement> blockStatement = nullptr;
+
+
+    consume(TokenType::FUNCTION);
+    Token functionNameToken = consume(TokenType::IDENTIFIER);
+    consume(TokenType::LEFT_PAREN);
+    consume(TokenType::RIGHT_PAREN);
+    std::unique_ptr<BlockStatement> statement = nullptr;
+
+    std::string functionName = std::get<std::string>(functionNameToken.getValue());
+    while (currentToken().getType() != TokenType::END_OF_FILE && currentToken().getType() != TokenType::RIGHT_BRACE)
+    {
+        blockStatement = parseBlockStatement();
+    }
+
+    if (!blockStatement)
+    {
+
+    }
+
+    return std::make_unique<FunctionDeclarationStatement>(std::move(functionName),std::move(blockStatement));
 }

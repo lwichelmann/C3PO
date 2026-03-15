@@ -13,41 +13,15 @@
 
 class ForLoopStatement : public Statement
 {
-    std::unique_ptr<BlockStatement> body;
+    std::unique_ptr<BlockStatement> m_body;
 
 public:
-    ForLoopStatement(std::unique_ptr<BlockStatement> body) : body(std::move(body))
-    {
-    }
+    ForLoopStatement(std::unique_ptr<BlockStatement> body);
 
-void accept(Visitor& visitor) override {
-        visitor.visit(*this);
-    }
+void accept(Visitor& visitor) override;
 
-    virtual std::string toString() const override
-    {
-        std::string result;
-
-        result += "for";
-        result += " {";
-        for (auto& statement : body.get()->getStatements())
-        {
-            result += statement->toString()+ ", ";
-        }
-        result += "}";
-        return result;
-    }
-
-    /*std::vector<std::unique_ptr<Statement>>& getBody()
-    {
-        return body;
-    }*/
-
-    std::unique_ptr<BlockStatement>& getBody()
-    {
-        return body;
-    }
-
+    [[nodiscard]] virtual std::string toString() const override;
+    std::unique_ptr<BlockStatement>& getBody();
 };
 
 #endif //C3PO_FORLOOPSTATEMENT_HPP

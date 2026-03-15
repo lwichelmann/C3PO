@@ -28,9 +28,9 @@ enum class TokenType
     RIGHT_PAREN,
     LEFT_BRACE,
     RIGHT_BRACE,
-
+    FUNCTION,
     UNKNOWN,
-    END_OF_FILE
+    END_OF_FILE,
 };
 
 class Token
@@ -43,38 +43,19 @@ private:
     Value m_value;
 
 public:
-    Token(TokenType type, std::string value)
-        : m_type(type), m_value(std::move(value))
-    {
-    }
+    Token(TokenType type, std::string value);
 
-    Token(TokenType type, int value)
-        : m_type(type), m_value(value)
-    {
-    }
+    Token(TokenType type, int value);
 
-    explicit Token(TokenType type)
-        : m_type(type), m_value("")
-    {
-    }
+    explicit Token(TokenType type);
 
 
-    TokenType getType() const { return m_type; }
-    const Value& getValue() const { return m_value; }
+    TokenType getType() const;
+    const Value& getValue() const;
 
-    bool isLiteral() const
-    {
-        return m_type == TokenType::NUMBER ||
-               m_type == TokenType::STRING ||
-               m_type == TokenType::IDENTIFIER;
-    }
+    bool isLiteral() const;
 
-    bool isOperator() const
-    {
-        return m_type == TokenType::PLUS ||
-               m_type == TokenType::MINUS ||
-               m_type == TokenType::EQUALS;
-    }
+    bool isOperator() const;
 
     static std::string typeToString(TokenType type);
 

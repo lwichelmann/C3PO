@@ -38,6 +38,10 @@ public:
         }
     }
     void visit(ExpressionStatement& stmt) override { }
+    void visit(FunctionDeclarationStatement& stmt) override
+    {
+
+    }
     void printVariables() const {
         std::cout << "\n=== Variables ===" << std::endl;
         for (const auto& [name, value] : variables) {
