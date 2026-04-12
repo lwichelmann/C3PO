@@ -9,14 +9,13 @@
 #include "Visitor.hpp"
 
 
-
-
-class Statement
-{
+class Statement {
 public:
     virtual ~Statement() = default;
+
     [[nodiscard]] virtual std::string toString() const = 0;
-    virtual void accept(Visitor& visitor) = 0;
+
+    virtual void accept(Visitor &visitor) = 0;
 };
 
 

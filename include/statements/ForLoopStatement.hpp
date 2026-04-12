@@ -11,17 +11,17 @@
 #include "BlockStatement.hpp"
 #include "Statement.hpp"
 
-class ForLoopStatement : public Statement
-{
+class ForLoopStatement : public Statement {
     std::unique_ptr<BlockStatement> m_body;
 
 public:
     ForLoopStatement(std::unique_ptr<BlockStatement> body);
 
-void accept(Visitor& visitor) override;
+    void accept(Visitor &visitor) override;
 
     [[nodiscard]] virtual std::string toString() const override;
-    std::unique_ptr<BlockStatement>& getBody();
+
+    std::unique_ptr<BlockStatement> &getBody();
 };
 
 #endif //C3PO_FORLOOPSTATEMENT_HPP

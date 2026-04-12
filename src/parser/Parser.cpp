@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "FunctionDeclarationStatement.hpp"
+#include "LiteralExpression.hpp"
 #include "../../include/statements/VariableDeclarationStatement.hpp"
 #include "statements/ForLoopStatement.hpp"
 #include "statements/ProgramStatement.hpp"
@@ -33,6 +34,25 @@ std::unique_ptr<BlockStatement> Parser::parseBlockStatement()
     consume(TokenType::RIGHT_BRACE);
 
     return std::make_unique<BlockStatement>(std::move(statements));
+}
+
+std::unique_ptr<Expression> Parser::parseExpression() {
+    return parsePrimary();
+}
+
+std::unique_ptr<Expression> Parser::parsePrimary() {
+    auto current = currentToken();
+    auto tokenType = current.getType();
+
+    auto value = current.getValue();
+
+    if (tokenType == TokenType::NUMBER) {
+        consume(TokenType::NUMBER);
+        return std::make_unique<LiteralExpression>(std::get<int>(value));
+    }else if (tokenType == TokenType::STRING) {
+        consume(TokenType::STRING);
+        return std::make_unique<LiteralExpression>(std::get<std::string>(value));
+    }
 }
 
 std::unique_ptr<ProgramStatement> Parser::parse()
@@ -103,30 +123,34 @@ std::unique_ptr<Statement> Parser::parseVariableStatement()
     consume(TokenType::VAR);
     Token tokenIdentifier = consume(TokenType::IDENTIFIER);
     consume(TokenType::EQUALS);
-
+/*
     Token valueToken = currentToken();
+
+    std::unique_ptr<Expression> initializer = nullptr;
 
     if (valueToken.getType() == TokenType::NUMBER)
     {
+        int val = std::get<int>(valueToken.getValue());
         consume(TokenType::NUMBER);
+        initializer = std::make_unique<LiteralExpression>(val);
     }
     else if (valueToken.getType() == TokenType::STRING)
     {
+        std::string val = std::get<std::string>(valueToken.getValue());
         consume(TokenType::STRING);
-    }
-    else if (valueToken.getType() == TokenType::IDENTIFIER)
-    {
-        consume(TokenType::IDENTIFIER);
+        initializer = std::make_unique<LiteralExpression>(val);
     }
     else
     {
-        throw std::runtime_error("Expected NUMBER, STRING or IDENTIFIER");
-    }
+        throw std::runtime_error("Erwarte NUMBER oder STRING für LiteralExpression");
+    }*/
+
+    auto initializer = parseExpression();
 
     consume(TokenType::SEMICOLON);
 
     std::string identifierString = std::get<std::string>(tokenIdentifier.getValue());
-    return std::make_unique<VariableDeclarationStatement>(identifierString, valueToken);
+    return std::make_unique<VariableDeclarationStatement>(identifierString, std::move(initializer));
 }
 
 std::unique_ptr<FunctionDeclarationStatement> Parser::parseFunctionDeclarationStatement()

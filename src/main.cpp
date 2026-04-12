@@ -14,21 +14,20 @@ int main(int argc, char* argv[])
         filePath = argv[1];
     }
 
-
     auto content = FileUtil::read_file(filePath);
     Lexer lexer(content);
     auto tokens = lexer.lex();
 
     Parser parser(tokens);
-    auto programm = parser.parse();
+    auto program = parser.parse();
 
-    for (const auto& statement : programm->getStatements())
+    for (const auto& statement : program->getStatements())
     {
         std::cout << statement->toString() << std::endl;
     }
 
     ConcreteInterpreter interpreter;
-    programm->accept(interpreter);
+    program->accept(interpreter);
 
     interpreter.printVariables();
 

@@ -4,12 +4,16 @@
 
 #ifndef C3PO_VISITOR_HPP
 #define C3PO_VISITOR_HPP
+#include <variant>
+#include <string>
 
+using RuntimeValue = std::variant<int,std::string>;
+
+class LiteralExpression;
 class FunctionDeclarationStatement;
 class VariableDeclarationStatement;
 class ForLoopStatement;
 class BlockStatement;
-class ExpressionStatement;
 class ProgramStatement;
 
 class Visitor
@@ -20,7 +24,7 @@ public:
     virtual void visit(VariableDeclarationStatement& stmt) = 0;
     virtual void visit(ForLoopStatement& stmt) = 0;
     virtual void visit(BlockStatement& stmt) = 0;
-    virtual void visit(ExpressionStatement& stmt) = 0;
+    virtual RuntimeValue visit(LiteralExpression& expr) = 0;
     virtual void visit(ProgramStatement& stmt) = 0;
     virtual void visit(FunctionDeclarationStatement& stmt) = 0;
 };

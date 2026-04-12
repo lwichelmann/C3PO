@@ -8,19 +8,25 @@
 #include <string>
 
 #include "Expression.hpp"
-#include "Token.hpp"
 #include "variant"
+#include "token/Token.hpp"
+#include "visitor/Visitor.hpp"
 
 class LiteralExpression: public Expression
 {
 private:
     std::variant<int, std::string> m_value{};
-    TokenType m_type;
+    TokenType m_tokenType;
 
-    std::string toString() const override
-    {
+public:
+    explicit LiteralExpression(int value);
+    explicit LiteralExpression(std::string value);
+    [[nodiscard]] std::string toString() const override;
 
-    }
+    [[nodiscard]] const RuntimeValue& getValue() const;
+    [[nodiscard]] TokenType getTokenType() const;
+    RuntimeValue accept(Visitor &visitor) override;
+
 };
 
 #endif //C3PO_LITERALEXPRESSION_HPP

@@ -12,6 +12,7 @@
 #include "../statements/ProgramStatement.hpp"
 #include "../statements/Statement.hpp"
 #include "../statements/FunctionDeclarationStatement.hpp"
+#include "../expressions/Expression.hpp"
 
 class Parser
 {
@@ -33,6 +34,9 @@ public:
     Token currentToken();
 
     std::unique_ptr<BlockStatement> parseBlockStatement();
+
+    std::unique_ptr<Expression> parseExpression();
+    std::unique_ptr<Expression> parsePrimary();
 
 };
 

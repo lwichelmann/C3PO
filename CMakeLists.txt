@@ -15,6 +15,7 @@ add_executable(C3PO
         src/statements/ForLoopStatement.cpp
         src/fileutil/FileUtil.cpp
         src/token/Token.cpp
+        src/expressions/LiteralExpression.cpp
 )
 
 

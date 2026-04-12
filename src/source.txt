@@ -1,2 +1,2 @@
-var b = "Test";
-var z = 42;
+var a = 15;
+var b = "test";

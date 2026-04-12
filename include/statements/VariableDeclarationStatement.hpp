@@ -8,21 +8,22 @@
 #include <string>
 #include <memory>
 #include <variant>
+
+#include "Expression.hpp"
 #include "Statement.hpp"
 #include "../token/Token.hpp"
 
 class VariableDeclarationStatement : public Statement
 {
     std::string m_variableName;
-    std::optional<Token> m_initialValue;
+    std::unique_ptr<Expression> m_initializer;
 
 public:
-    VariableDeclarationStatement(const std::string& name, const Token& value);
+    VariableDeclarationStatement(const std::string& name, std::unique_ptr<Expression> m_initializer);
 
     void accept(Visitor& visitor) override;
     const std::string& getVariableName() const;
-    const std::optional<Token>& getInitialValue() const;
-
+    const std::unique_ptr<Expression>& getExpression() const;
     std::string toString() const override;
 };
 
