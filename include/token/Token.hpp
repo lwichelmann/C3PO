@@ -21,6 +21,8 @@ enum class TokenType
 
     PLUS,
     MINUS,
+    MULTIPLY,
+    DIVIDE,
     EQUALS,
 
     SEMICOLON,
@@ -50,7 +52,7 @@ public:
     explicit Token(TokenType type);
 
 
-    TokenType getType() const;
+    [[nodiscard]] TokenType getType() const;
     const Value& getValue() const;
 
     bool isLiteral() const;
@@ -58,6 +60,7 @@ public:
     bool isOperator() const;
 
     static std::string typeToString(TokenType type);
+
 
     friend std::ostream& operator<<(std::ostream& os, const Token& token);
 };

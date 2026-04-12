@@ -13,7 +13,7 @@ class Expression
     public:
     virtual ~Expression() = default;
     virtual std::string toString() const = 0;
-    virtual RuntimeValue accept(Visitor& visitor) = 0;
+    virtual RuntimeValue accept(Visitor &visitor) = 0;
 
 };
 

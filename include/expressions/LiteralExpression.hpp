@@ -25,6 +25,7 @@ public:
 
     [[nodiscard]] const RuntimeValue& getValue() const;
     [[nodiscard]] TokenType getTokenType() const;
+
     RuntimeValue accept(Visitor &visitor) override;
 
 };

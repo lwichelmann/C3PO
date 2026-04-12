@@ -15,6 +15,7 @@ class VariableDeclarationStatement;
 class ForLoopStatement;
 class BlockStatement;
 class ProgramStatement;
+class BinaryExpression;
 
 class Visitor
 {
@@ -24,9 +25,10 @@ public:
     virtual void visit(VariableDeclarationStatement& stmt) = 0;
     virtual void visit(ForLoopStatement& stmt) = 0;
     virtual void visit(BlockStatement& stmt) = 0;
-    virtual RuntimeValue visit(LiteralExpression& expr) = 0;
     virtual void visit(ProgramStatement& stmt) = 0;
     virtual void visit(FunctionDeclarationStatement& stmt) = 0;
+    virtual RuntimeValue visit(LiteralExpression& expr) = 0;
+    virtual RuntimeValue visit(BinaryExpression& stmt) = 0;
 };
 
 #endif //C3PO_VISITOR_HPP
