@@ -6,6 +6,7 @@
 
 #include <iostream>
 
+#include "BinaryExpression.hpp"
 #include "FunctionDeclarationStatement.hpp"
 #include "LiteralExpression.hpp"
 #include "../../include/statements/VariableDeclarationStatement.hpp"
@@ -21,7 +22,6 @@ std::unique_ptr<BlockStatement> Parser::parseBlockStatement()
     while (currentToken().getType() != TokenType::RIGHT_BRACE &&
         currentToken().getType() != TokenType::END_OF_FILE)
     {
-        // TODO hier alle möglichen Statements abfragen
         if (currentToken().getType() == TokenType::VAR)
         {
             statements.push_back(parseVariableStatement());
@@ -36,23 +36,76 @@ std::unique_ptr<BlockStatement> Parser::parseBlockStatement()
     return std::make_unique<BlockStatement>(std::move(statements));
 }
 
-std::unique_ptr<Expression> Parser::parseExpression() {
-    return parsePrimary();
+std::unique_ptr<Expression> Parser::parseExpression()
+{
+    auto left = parseTerm();
+
+    while (true)
+    {
+        auto type = currentToken().getType();
+
+        if (type != TokenType::PLUS && type != TokenType::MINUS)
+            break;
+
+        consume(type);
+        auto right = parseTerm();
+
+        left = std::make_unique<BinaryExpression>(
+            type,
+            std::move(left),
+            std::move(right)
+        );
+    }
+
+    return left;
 }
 
-std::unique_ptr<Expression> Parser::parsePrimary() {
-    auto current = currentToken();
-    auto tokenType = current.getType();
+std::unique_ptr<Expression> Parser::parseTerm()
+{
+    auto left = parsePrimary();
 
-    auto value = current.getValue();
+    while (true)
+    {
+        auto type = currentToken().getType();
 
-    if (tokenType == TokenType::NUMBER) {
-        consume(TokenType::NUMBER);
-        return std::make_unique<LiteralExpression>(std::get<int>(value));
-    }else if (tokenType == TokenType::STRING) {
-        consume(TokenType::STRING);
-        return std::make_unique<LiteralExpression>(std::get<std::string>(value));
+        if (type != TokenType::MULTIPLY && type != TokenType::DIVIDE)
+            break;
+
+        consume(type);
+        auto right = parsePrimary();
+
+        left = std::make_unique<BinaryExpression>(
+            type,
+            std::move(left),
+            std::move(right)
+        );
     }
+
+    return left;
+}
+
+std::unique_ptr<Expression> Parser::parsePrimary()
+{
+    auto token = currentToken();
+
+    if (token.getType() == TokenType::NUMBER) {
+        consume(TokenType::NUMBER);
+        return std::make_unique<LiteralExpression>(std::get<int>(token.getValue()));
+    }
+
+    if (token.getType() == TokenType::STRING) {
+        consume(TokenType::STRING);
+        return std::make_unique<LiteralExpression>(std::get<std::string>(token.getValue()));
+    }
+
+    if (token.getType() == TokenType::LEFT_PAREN) {
+        consume(TokenType::LEFT_PAREN);
+        auto expr = parseExpression();
+        consume(TokenType::RIGHT_PAREN);
+        return expr;
+    }
+
+    throw std::runtime_error("Unexpected token in parsePrimary");
 }
 
 std::unique_ptr<ProgramStatement> Parser::parse()
@@ -60,7 +113,6 @@ std::unique_ptr<ProgramStatement> Parser::parse()
     std::unique_ptr<BlockStatement> blockStatement = nullptr;
 
     std::vector<std::unique_ptr<Statement>> statements;
-    std::cout << "started parsing ProgramStatement" << std::endl;
 
     while (currentToken().getType() != TokenType::END_OF_FILE)
     {
@@ -76,7 +128,8 @@ std::unique_ptr<ProgramStatement> Parser::parse()
         else if (currentToken().getType() == TokenType::VAR)
         {
             statements.push_back(parseVariableStatement());
-        }else if (currentToken().getType() == TokenType::FUNCTION)
+        }
+        else if (currentToken().getType() == TokenType::FUNCTION)
         {
             statements.push_back(parseFunctionDeclarationStatement());
         }
@@ -87,7 +140,6 @@ std::unique_ptr<ProgramStatement> Parser::parse()
         // throw std::runtime_error("No for loop body found");
     }
 
-    std::cout << "finished parsing..." << std::endl;
     return std::make_unique<ProgramStatement>(std::move(statements));
 }
 
@@ -123,27 +175,6 @@ std::unique_ptr<Statement> Parser::parseVariableStatement()
     consume(TokenType::VAR);
     Token tokenIdentifier = consume(TokenType::IDENTIFIER);
     consume(TokenType::EQUALS);
-/*
-    Token valueToken = currentToken();
-
-    std::unique_ptr<Expression> initializer = nullptr;
-
-    if (valueToken.getType() == TokenType::NUMBER)
-    {
-        int val = std::get<int>(valueToken.getValue());
-        consume(TokenType::NUMBER);
-        initializer = std::make_unique<LiteralExpression>(val);
-    }
-    else if (valueToken.getType() == TokenType::STRING)
-    {
-        std::string val = std::get<std::string>(valueToken.getValue());
-        consume(TokenType::STRING);
-        initializer = std::make_unique<LiteralExpression>(val);
-    }
-    else
-    {
-        throw std::runtime_error("Erwarte NUMBER oder STRING für LiteralExpression");
-    }*/
 
     auto initializer = parseExpression();
 
@@ -172,8 +203,7 @@ std::unique_ptr<FunctionDeclarationStatement> Parser::parseFunctionDeclarationSt
 
     if (!blockStatement)
     {
-
     }
 
-    return std::make_unique<FunctionDeclarationStatement>(std::move(functionName),std::move(blockStatement));
+    return std::make_unique<FunctionDeclarationStatement>(std::move(functionName), std::move(blockStatement));
 }

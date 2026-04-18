@@ -13,7 +13,8 @@ BinaryExpression::BinaryExpression(TokenType op, std::unique_ptr<Expression> lef
 }
 
 std::string BinaryExpression::toString() const {
-
+    std::string opStr = Token::typeToString(m_op);
+    return "(" + m_left_expression->toString() + " " + opStr + " " + m_right_expression->toString() + ")";
 }
 
 RuntimeValue BinaryExpression::accept(Visitor &visitor) {

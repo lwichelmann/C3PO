@@ -54,8 +54,6 @@ public:
     }
 
     RuntimeValue visit(BinaryExpression &stmt) override {
-        std::cout << "Executing binary expression..." << std::endl;
-
         auto op = stmt.getOperator();
         auto left = stmt.getLeft()->accept(*this);
         auto right = stmt.getRight()->accept(*this);

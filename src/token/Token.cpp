@@ -65,20 +65,22 @@ std::string Token::typeToString(TokenType type)
     {
     case TokenType::IDENTIFIER: return "IDENTIFIER";
     case TokenType::NUMBER: return "NUMBER";
-
+    case TokenType::STRING: return "STRING";
 
     case TokenType::VAR: return "VAR";
     case TokenType::PRINT: return "PRINT";
 
-    case TokenType::PLUS: return "PLUS";
-    case TokenType::MINUS: return "MINUS";
-    case TokenType::EQUALS: return "EQUALS";
+    case TokenType::PLUS: return "+";
+    case TokenType::MINUS: return "-";
+    case TokenType::MULTIPLY: return "*";
+    case TokenType::DIVIDE: return "/";
+    case TokenType::EQUALS: return "=";
 
-    case TokenType::SEMICOLON: return "SEMICOLON";
-    case TokenType::LEFT_PAREN: return "LEFT_PAREN";
-    case TokenType::RIGHT_PAREN: return "RIGHT_PAREN";
-    case TokenType::LEFT_BRACE: return "LEFT_BRACE";
-    case TokenType::RIGHT_BRACE: return "RIGHT_BRACE";
+    case TokenType::SEMICOLON: return ";";
+    case TokenType::LEFT_PAREN: return "(";
+    case TokenType::RIGHT_PAREN: return ")";
+    case TokenType::LEFT_BRACE: return "{";
+    case TokenType::RIGHT_BRACE: return "}";
 
     case TokenType::UNKNOWN: return "UNKNOWN";
     case TokenType::END_OF_FILE: return "EOF";

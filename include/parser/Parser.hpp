@@ -37,6 +37,9 @@ public:
 
     std::unique_ptr<Expression> parseExpression();
     std::unique_ptr<Expression> parsePrimary();
+    std::unique_ptr<Expression> parseTerm();
+    std::unique_ptr<Expression> parseFactor();
+    std::unique_ptr<Expression> parseUnary();
 
 };
 

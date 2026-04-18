@@ -9,27 +9,45 @@
 int main(int argc, char* argv[])
 {
     std::string filePath = "../src/source.txt";
-    if (argc > 1 && std::filesystem::exists(argv[1]))
+    bool printAst = false;
+    for (int i = 1; i < argc; ++i)
     {
-        filePath = argv[1];
+        std::string arg = argv[i];
+
+        if (arg == "--printAst")
+        {
+            printAst = true;
+        }
+        else if (std::filesystem::exists(arg))
+        {
+            filePath = arg;
+        }
+        else
+        {
+            std::cerr << "Warnung: Unbekanntes Argument oder Datei nicht gefunden: " << arg << std::endl;
+        }
+
+        auto content = FileUtil::read_file(filePath);
+        Lexer lexer(content);
+        auto tokens = lexer.lex();
+
+        Parser parser(tokens);
+        auto program = parser.parse();
+
+        if (printAst)
+        {
+            std::cout << "\n=== Abstract Syntax Tree ===" << std::endl;
+            for (const auto& statement : program->getStatements())
+            {
+                std::cout << statement->toString() << std::endl;
+            }
+            std::cout << "============================\n" << std::endl;
+        }
+        ConcreteInterpreter interpreter;
+        program->accept(interpreter);
+
+        interpreter.printVariables();
+
+        return 0;
     }
-
-    auto content = FileUtil::read_file(filePath);
-    Lexer lexer(content);
-    auto tokens = lexer.lex();
-
-    Parser parser(tokens);
-    auto program = parser.parse();
-
-    for (const auto& statement : program->getStatements())
-    {
-        std::cout << statement->toString() << std::endl;
-    }
-
-    ConcreteInterpreter interpreter;
-    program->accept(interpreter);
-
-    interpreter.printVariables();
-
-    return 0;
 }

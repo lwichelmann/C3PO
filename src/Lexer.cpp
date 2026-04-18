@@ -98,6 +98,10 @@ Token Lexer::scanSymbol()
         return {TokenType::PLUS, "+"};
     case '-':
         return {TokenType::MINUS, "-"};
+    case '*':
+        return {TokenType::MULTIPLY, "*"};
+    case '/':
+        return {TokenType::DIVIDE, "/"};
     case ';':
         return {TokenType::SEMICOLON, ";"};
     case '=':
