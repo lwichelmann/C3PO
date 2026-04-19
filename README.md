@@ -5,17 +5,30 @@ The main goal of this project is to **learn by doing** — to understand the ful
 
 ## Supported Syntax
 
-### Variable Declarations
+### Variable Declarations & Arithmetic
 ```c
 var x = 42;
-var name = "Claude";
-var count = 100;
-var message = "Hello World";
+var name = "Alice";
+var result = 12 + 6 * 2;
+```
+
+### Print Statements
+```c
+print("Hello World");
+print(result);
 ```
 
 ### Mixed Programs
 ```c
-TODO
+var greeting = "Hello ";
+var name = "User";
+print(greeting + name);
+
+for {
+    var a = 10;
+    var b = 20;
+    print(a * b);
+}
 ```
 
 ## Supported Data Types
@@ -27,14 +40,15 @@ TODO
 
 **Input:**
 ```c
-var x = 42;
-var name = "Alice";
+var a = 12 + 6 * 2;
+print("The result is:");
+print(a);
 ```
 
-**AST Output:**
-```
-VariableDeclarationStatement(x = 42)
-VariableDeclarationStatement(name = "Alice")
+**Execution Output:**
+```text
+The result is:
+24
 ```
 
 ## Roadmap
@@ -44,13 +58,14 @@ VariableDeclarationStatement(name = "Alice")
 - [x] String literals support
 - [x] For loop blocks
 - [x] Lexer and Parser
+- [x] Arithmetic expressions (`+`, `-`, `*`, `/`)
+- [x] Print statements
+- [x] Actual interpretation/execution (Visitor Pattern)
+- [x] Basic Symbol table (Variable tracking)
 
 **Planned:**
-- [ ] Arithmetic expressions (`+`, `-`, `*`, `/`)
 - [ ] Conditional statements (`if`, `else`)
-- [ ] Print statements
-- [ ] Actual interpretation/execution
-- [ ] Symbol table and scope management
+- [ ] Block scope management
 - [ ] Function declarations and calls
 - [ ] Arrays and data structures
 
