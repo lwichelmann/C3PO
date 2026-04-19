@@ -18,6 +18,11 @@ add_executable(C3PO
         src/expressions/LiteralExpression.cpp
         include/expressions/BinaryExpression.hpp
         src/expressions/BinaryExpression.cpp
+        include/statements/PrintStatement.hpp
+        src/statements/PrintStatement.cpp
+        include/expressions/VariableExpression.hpp
+        src/expressions/VariableExpression.cpp
+        src/visitor/ConcreteInterpreter.cpp
 )
 
 

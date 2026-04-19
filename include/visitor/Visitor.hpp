@@ -7,7 +7,7 @@
 #include <variant>
 #include <string>
 
-using RuntimeValue = std::variant<int,std::string>;
+using RuntimeValue = std::variant<int, std::string>;
 
 class LiteralExpression;
 class FunctionDeclarationStatement;
@@ -16,19 +16,30 @@ class ForLoopStatement;
 class BlockStatement;
 class ProgramStatement;
 class BinaryExpression;
+class VariableExpression;
+class PrintStatement;
 
-class Visitor
-{
+class Visitor {
 public:
     virtual ~Visitor() = default;
 
-    virtual void visit(VariableDeclarationStatement& stmt) = 0;
-    virtual void visit(ForLoopStatement& stmt) = 0;
-    virtual void visit(BlockStatement& stmt) = 0;
-    virtual void visit(ProgramStatement& stmt) = 0;
-    virtual void visit(FunctionDeclarationStatement& stmt) = 0;
-    virtual RuntimeValue visit(LiteralExpression& expr) = 0;
-    virtual RuntimeValue visit(BinaryExpression& stmt) = 0;
+    virtual void visit(VariableDeclarationStatement &stmt) = 0;
+
+    virtual void visit(ForLoopStatement &stmt) = 0;
+
+    virtual void visit(BlockStatement &stmt) = 0;
+
+    virtual void visit(ProgramStatement &stmt) = 0;
+
+    virtual void visit(FunctionDeclarationStatement &stmt) = 0;
+
+    virtual RuntimeValue visit(LiteralExpression &expr) = 0;
+
+    virtual RuntimeValue visit(BinaryExpression &stmt) = 0;
+
+    virtual void visit(PrintStatement &stmt) = 0;
+
+    virtual RuntimeValue visit(VariableExpression &expr) = 0;
 };
 
 #endif //C3PO_VISITOR_HPP

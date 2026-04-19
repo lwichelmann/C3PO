@@ -12,22 +12,21 @@
 #include "../../include/statements/VariableDeclarationStatement.hpp"
 #include "statements/ForLoopStatement.hpp"
 #include "statements/ProgramStatement.hpp"
+#include "../../include/statements/PrintStatement.hpp"
+#include "VariableExpression.hpp"
 
-std::unique_ptr<BlockStatement> Parser::parseBlockStatement()
-{
-    std::vector<std::unique_ptr<Statement>> statements;
+std::unique_ptr<BlockStatement> Parser::parseBlockStatement() {
+    std::vector<std::unique_ptr<Statement> > statements;
 
     consume(TokenType::LEFT_BRACE);
 
     while (currentToken().getType() != TokenType::RIGHT_BRACE &&
-        currentToken().getType() != TokenType::END_OF_FILE)
-    {
-        if (currentToken().getType() == TokenType::VAR)
-        {
+           currentToken().getType() != TokenType::END_OF_FILE) {
+        if (currentToken().getType() == TokenType::VAR) {
             statements.push_back(parseVariableStatement());
-        }
-        else
-        {
+        } else if (currentToken().getType() == TokenType::PRINT) {
+            statements.push_back(parsePrintStatement());
+        } else {
             throw std::runtime_error("Unexpected token in block");
         }
     }
@@ -36,12 +35,10 @@ std::unique_ptr<BlockStatement> Parser::parseBlockStatement()
     return std::make_unique<BlockStatement>(std::move(statements));
 }
 
-std::unique_ptr<Expression> Parser::parseExpression()
-{
+std::unique_ptr<Expression> Parser::parseExpression() {
     auto left = parseTerm();
 
-    while (true)
-    {
+    while (true) {
         auto type = currentToken().getType();
 
         if (type != TokenType::PLUS && type != TokenType::MINUS)
@@ -60,12 +57,10 @@ std::unique_ptr<Expression> Parser::parseExpression()
     return left;
 }
 
-std::unique_ptr<Expression> Parser::parseTerm()
-{
+std::unique_ptr<Expression> Parser::parseTerm() {
     auto left = parsePrimary();
 
-    while (true)
-    {
+    while (true) {
         auto type = currentToken().getType();
 
         if (type != TokenType::MULTIPLY && type != TokenType::DIVIDE)
@@ -84,8 +79,7 @@ std::unique_ptr<Expression> Parser::parseTerm()
     return left;
 }
 
-std::unique_ptr<Expression> Parser::parsePrimary()
-{
+std::unique_ptr<Expression> Parser::parsePrimary() {
     auto token = currentToken();
 
     if (token.getType() == TokenType::NUMBER) {
@@ -98,6 +92,11 @@ std::unique_ptr<Expression> Parser::parsePrimary()
         return std::make_unique<LiteralExpression>(std::get<std::string>(token.getValue()));
     }
 
+    if (token.getType() == TokenType::IDENTIFIER) {
+        consume(TokenType::IDENTIFIER);
+        return std::make_unique<VariableExpression>(std::get<std::string>(token.getValue()));
+    }
+
     if (token.getType() == TokenType::LEFT_PAREN) {
         consume(TokenType::LEFT_PAREN);
         auto expr = parseExpression();
@@ -108,16 +107,13 @@ std::unique_ptr<Expression> Parser::parsePrimary()
     throw std::runtime_error("Unexpected token in parsePrimary");
 }
 
-std::unique_ptr<ProgramStatement> Parser::parse()
-{
+std::unique_ptr<ProgramStatement> Parser::parse() {
     std::unique_ptr<BlockStatement> blockStatement = nullptr;
 
-    std::vector<std::unique_ptr<Statement>> statements;
+    std::vector<std::unique_ptr<Statement> > statements;
 
-    while (currentToken().getType() != TokenType::END_OF_FILE)
-    {
-        if (currentToken().getType() == TokenType::FOR_LOOP)
-        {
+    while (currentToken().getType() != TokenType::END_OF_FILE) {
+        if (currentToken().getType() == TokenType::FOR_LOOP) {
             consume(TokenType::FOR_LOOP);
 
             blockStatement = parseBlockStatement();
@@ -125,39 +121,33 @@ std::unique_ptr<ProgramStatement> Parser::parse()
 
         // TODO hier weitere möglichen Statements parsen
 
-        else if (currentToken().getType() == TokenType::VAR)
-        {
+        else if (currentToken().getType() == TokenType::VAR) {
             statements.push_back(parseVariableStatement());
-        }
-        else if (currentToken().getType() == TokenType::FUNCTION)
-        {
+        }else if (currentToken().getType() == TokenType::PRINT) {
+            statements.push_back(parsePrintStatement());
+        } else if (currentToken().getType() == TokenType::FUNCTION) {
             statements.push_back(parseFunctionDeclarationStatement());
         }
     }
 
-    if (!blockStatement)
-    {
+    if (!blockStatement) {
         // throw std::runtime_error("No for loop body found");
     }
 
     return std::make_unique<ProgramStatement>(std::move(statements));
 }
 
-Token Parser::peek()
-{
-    if (m_current + 1 >= m_tokens.size())
-    {
+Token Parser::peek() {
+    if (m_current + 1 >= m_tokens.size()) {
         throw std::runtime_error("Unexpected end of file can not peek anymore");
     }
     return m_tokens.at(m_current + 1);
 }
 
-Token Parser::consume(TokenType type)
-{
+Token Parser::consume(TokenType type) {
     Token token = currentToken();
 
-    if (type != TokenType::END_OF_FILE && token.getType() != type)
-    {
+    if (type != TokenType::END_OF_FILE && token.getType() != type) {
         throw std::runtime_error(
             "Expected token type " + Token::typeToString(type) + " but got " + Token::typeToString(token.getType()));
     }
@@ -165,13 +155,11 @@ Token Parser::consume(TokenType type)
     return token;
 }
 
-Token Parser::currentToken()
-{
+Token Parser::currentToken() {
     return m_tokens.at(m_current);
 }
 
-std::unique_ptr<Statement> Parser::parseVariableStatement()
-{
+std::unique_ptr<Statement> Parser::parseVariableStatement() {
     consume(TokenType::VAR);
     Token tokenIdentifier = consume(TokenType::IDENTIFIER);
     consume(TokenType::EQUALS);
@@ -184,8 +172,19 @@ std::unique_ptr<Statement> Parser::parseVariableStatement()
     return std::make_unique<VariableDeclarationStatement>(identifierString, std::move(initializer));
 }
 
-std::unique_ptr<FunctionDeclarationStatement> Parser::parseFunctionDeclarationStatement()
-{
+std::unique_ptr<Statement> Parser::parsePrintStatement() {
+    consume(TokenType::PRINT);
+    consume(TokenType::LEFT_PAREN);
+
+    auto expression = parseExpression();
+
+    consume(TokenType::RIGHT_PAREN);
+    consume(TokenType::SEMICOLON);
+
+    return std::make_unique<PrintStatement>(std::move(expression));
+}
+
+std::unique_ptr<FunctionDeclarationStatement> Parser::parseFunctionDeclarationStatement() {
     std::unique_ptr<BlockStatement> blockStatement = nullptr;
 
 
@@ -196,13 +195,11 @@ std::unique_ptr<FunctionDeclarationStatement> Parser::parseFunctionDeclarationSt
     std::unique_ptr<BlockStatement> statement = nullptr;
 
     std::string functionName = std::get<std::string>(functionNameToken.getValue());
-    while (currentToken().getType() != TokenType::END_OF_FILE && currentToken().getType() != TokenType::RIGHT_BRACE)
-    {
+    while (currentToken().getType() != TokenType::END_OF_FILE && currentToken().getType() != TokenType::RIGHT_BRACE) {
         blockStatement = parseBlockStatement();
     }
 
-    if (!blockStatement)
-    {
+    if (!blockStatement) {
     }
 
     return std::make_unique<FunctionDeclarationStatement>(std::move(functionName), std::move(blockStatement));

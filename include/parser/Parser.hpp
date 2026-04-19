@@ -27,6 +27,7 @@ public:
     }
 
     std::unique_ptr<Statement> parseVariableStatement();
+    std::unique_ptr<Statement> parsePrintStatement();
     std::unique_ptr<FunctionDeclarationStatement> parseFunctionDeclarationStatement();
     std::unique_ptr<ProgramStatement> parse();
     Token peek();

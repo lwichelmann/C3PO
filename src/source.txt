@@ -1,3 +1,7 @@
 var a = 15 + 2 * 6;
 var b = 21 * 2 + 42;
 var c = 42;
+
+print(a);
+print("here i am ");
+print(42+42*2);
