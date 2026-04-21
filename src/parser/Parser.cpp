@@ -113,6 +113,10 @@ std::unique_ptr<ProgramStatement> Parser::parse() {
     std::vector<std::unique_ptr<Statement> > statements;
 
     while (currentToken().getType() != TokenType::END_OF_FILE) {
+        if (currentToken().getType() == TokenType::LEFT_BRACE) {
+            statements.push_back(parseBlockStatement());
+        }
+
         if (currentToken().getType() == TokenType::FOR_LOOP) {
             consume(TokenType::FOR_LOOP);
 

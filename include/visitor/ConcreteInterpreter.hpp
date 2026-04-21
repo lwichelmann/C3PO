@@ -4,12 +4,14 @@
 #include "visitor/Visitor.hpp"
 #include <map>
 #include <string>
+#include <vector>
 
 class ConcreteInterpreter : public Visitor {
 private:
-    std::map<std::string, RuntimeValue> variables;
+    std::vector<std::map<std::string, RuntimeValue>> m_environmentStack;
 
 public:
+    explicit ConcreteInterpreter();
     void visit(ProgramStatement &stmt) override;
     void visit(VariableDeclarationStatement &stmt) override;
     void visit(ForLoopStatement &stmt) override;

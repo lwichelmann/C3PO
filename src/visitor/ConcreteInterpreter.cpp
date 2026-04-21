@@ -15,6 +15,10 @@
 #include "../../include/expressions/BinaryExpression.hpp"
 #include "../../include/expressions/VariableExpression.hpp"
 
+ConcreteInterpreter::ConcreteInterpreter() {
+    m_environmentStack.push_back({});
+}
+
 void ConcreteInterpreter::visit(ProgramStatement &stmt) {
     for (const auto &statement: stmt.getStatements()) {
         statement->accept(*this);
@@ -25,7 +29,7 @@ void ConcreteInterpreter::visit(VariableDeclarationStatement &stmt) {
     auto &expression = stmt.getExpression();
     if (expression) {
         RuntimeValue value = expression->accept(*this);
-        variables.emplace(stmt.getVariableName(), value);
+        m_environmentStack.back()[stmt.getVariableName()] = value;
     } else {
         std::cout << "Error: expression is null" << std::endl;
     }
@@ -37,9 +41,14 @@ void ConcreteInterpreter::visit(ForLoopStatement &stmt) {
 }
 
 void ConcreteInterpreter::visit(BlockStatement &block) {
+    std::cout << "found my blockStatement" << std::endl;
+    // creates new environment (scope) on the  stack
+    m_environmentStack.push_back({});
     for (const auto &statement: block.getStatements()) {
         statement->accept(*this);
     }
+    // deletes the new enviroments (scope) from the stack
+    m_environmentStack.pop_back();
 }
 
 RuntimeValue ConcreteInterpreter::visit(LiteralExpression &stmt) {
@@ -90,17 +99,26 @@ void ConcreteInterpreter::visit(PrintStatement &stmt) {
 }
 
 RuntimeValue ConcreteInterpreter::visit(VariableExpression &expr) {
-    if (variables.contains(expr.getName())) {
-        return variables.at(expr.getName());
+    const std::string& name = expr.getName();
+
+    // looks for the variable on the last environment sitting on the stack
+    for (auto it = m_environmentStack.rbegin(); it != m_environmentStack.rend(); ++it) {
+        if (it->contains(name)) {
+            return it->at(name);
+        }
     }
-    throw std::runtime_error("Laufzeitfehler: Undefinierte Variable '" + expr.getName() + "'.");
+
+    throw std::runtime_error("Laufzeitfehler: Undefinierte Variable '" + name + "'.");
 }
 
 void ConcreteInterpreter::printVariables() const {
-    std::cout << "\n=== Variables ===" << std::endl;
-    for (const auto &[name, value]: variables) {
-        std::cout << name << " = ";
-        std::visit([](const auto &val) { std::cout << val; }, value);
-        std::cout << std::endl;
+    std::cout << "\n=== Variables (Global Scope) ===" << std::endl;
+
+    if (!m_environmentStack.empty()) {
+        for (const auto &[name, value] : m_environmentStack.front()) {
+            std::cout << name << " = ";
+            std::visit([](const auto &v) { std::cout << v; }, value);
+            std::cout << std::endl;
+        }
     }
 }
