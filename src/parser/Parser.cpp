@@ -92,6 +92,18 @@ std::unique_ptr<Expression> Parser::parsePrimary() {
         return std::make_unique<LiteralExpression>(std::get<std::string>(token.getValue()));
     }
 
+    if (token.getType() == TokenType::TRUE_LITERAL)
+    {
+        consume(TokenType::TRUE_LITERAL);
+        return std::make_unique<LiteralExpression>(true);
+    }
+
+    if (token.getType() == TokenType::FALSE_LITERAL)
+    {
+        consume(TokenType::FALSE_LITERAL);
+        return std::make_unique<LiteralExpression>(false);
+    }
+
     if (token.getType() == TokenType::IDENTIFIER) {
         consume(TokenType::IDENTIFIER);
         return std::make_unique<VariableExpression>(std::get<std::string>(token.getValue()));

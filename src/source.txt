@@ -1,6 +1,8 @@
 var a = 15 + 2 * 6;
 var b = 21 * 2 + 42;
 var c = 42;
+var isEven = false;
+var isOdd = true;
 
 print(a);
 print("here i am ");
@@ -21,3 +23,5 @@ print(x);
 
 print("Nach dem Block (x):");
 print(x);
+print(isEven);
+print(isOdd);

@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 26)
 
 add_executable(C3PO
         src/main.cpp
-        src/Lexer.cpp
+        src/lexer/Lexer.cpp
         src/parser/Parser.cpp
         src/statements/VariableDeclarationStatement.cpp
         src/statements/Statement.cpp

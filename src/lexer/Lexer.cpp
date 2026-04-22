@@ -1,8 +1,8 @@
 //
 // Created by leonw on 25.09.2025.
 //
-#include "../include/lexer/Lexer.hpp"
-#include "../include/token/Token.hpp"
+#include "../../include/lexer/Lexer.hpp"
+#include "../../include/token/Token.hpp"
 
 void Lexer::advance()
 {
@@ -42,7 +42,9 @@ std::map<std::string, TokenType> Lexer::buildKeywords()
     return {
         {"var", TokenType::VAR},
         {"print", TokenType::PRINT},
-        {"for", TokenType::FOR_LOOP}
+        {"for", TokenType::FOR_LOOP},
+        {"true", TokenType::TRUE_LITERAL},
+        {"false", TokenType::FALSE_LITERAL}
     };
 }
 

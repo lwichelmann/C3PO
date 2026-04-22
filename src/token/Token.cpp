@@ -66,7 +66,8 @@ std::string Token::typeToString(TokenType type)
     case TokenType::IDENTIFIER: return "IDENTIFIER";
     case TokenType::NUMBER: return "NUMBER";
     case TokenType::STRING: return "STRING";
-
+    case TokenType::TRUE_LITERAL: return "TRUE";
+    case TokenType::FALSE_LITERAL: return "FALSE";
     case TokenType::VAR: return "VAR";
     case TokenType::PRINT: return "PRINT";
 

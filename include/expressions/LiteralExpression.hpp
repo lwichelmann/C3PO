@@ -12,22 +12,22 @@
 #include "token/Token.hpp"
 #include "visitor/Visitor.hpp"
 
-class LiteralExpression: public Expression
+class LiteralExpression : public Expression
 {
 private:
-    std::variant<int, std::string> m_value{};
+    std::variant<int, std::string, bool> m_value{};
     TokenType m_tokenType;
 
 public:
     explicit LiteralExpression(int value);
     explicit LiteralExpression(std::string value);
+    explicit LiteralExpression(bool value);
     [[nodiscard]] std::string toString() const override;
 
     [[nodiscard]] const RuntimeValue& getValue() const;
     [[nodiscard]] TokenType getTokenType() const;
 
-    RuntimeValue accept(Visitor &visitor) override;
-
+    RuntimeValue accept(Visitor& visitor) override;
 };
 
 #endif //C3PO_LITERALEXPRESSION_HPP

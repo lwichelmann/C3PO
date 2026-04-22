@@ -7,7 +7,7 @@
 #include <variant>
 #include <string>
 
-using RuntimeValue = std::variant<int, std::string>;
+using RuntimeValue = std::variant<int, std::string, bool>;
 
 class LiteralExpression;
 class FunctionDeclarationStatement;

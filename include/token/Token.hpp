@@ -25,6 +25,9 @@ enum class TokenType
     DIVIDE,
     EQUALS,
 
+    TRUE_LITERAL,
+    FALSE_LITERAL,
+
     SEMICOLON,
     LEFT_PAREN,
     RIGHT_PAREN,
