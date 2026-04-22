@@ -15,7 +15,7 @@ class ProgramStatement : public Statement
     std::vector<std::unique_ptr<Statement>> m_statements;
 
 public:
-    ProgramStatement(std::vector<std::unique_ptr<Statement>> statements) : m_statements(std::move(statements))
+    explicit ProgramStatement(std::vector<std::unique_ptr<Statement>> statements) : m_statements(std::move(statements))
     {
     }
 

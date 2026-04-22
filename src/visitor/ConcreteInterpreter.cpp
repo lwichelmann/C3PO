@@ -5,6 +5,8 @@
 #include <iostream>
 #include <stdexcept>
 #include "../../include/visitor/ConcreteInterpreter.hpp"
+
+#include "IfStatement.hpp"
 #include "../../include/statements/ProgramStatement.hpp"
 #include "../../include/statements/VariableDeclarationStatement.hpp"
 #include "../../include/statements/ForLoopStatement.hpp"
@@ -46,6 +48,30 @@ void ConcreteInterpreter::visit(ForLoopStatement& stmt)
 {
     std::cout << "Executing for loop..." << std::endl;
     stmt.getBody()->accept(*this);
+}
+
+void ConcreteInterpreter::visit(IfStatement& stmt)
+{
+    RuntimeValue conditionValue = stmt.getCondition().accept(*this);
+    bool isTrue = false;
+
+    std::visit([&isTrue](auto&& val)
+    {
+        using T = std::decay_t<decltype(val)>;
+        if constexpr (std::is_same_v<T, bool>) {
+            isTrue = val;
+        } else {
+            throw std::runtime_error("Laufzeitfehler: Die Bedingung in einem 'if' muss ein boolean sein.");
+        }
+    }, conditionValue);
+
+    if (isTrue)
+    {
+        stmt.getThenBranch().accept(*this);
+    }else if (stmt.hasElseBranch())
+    {
+        stmt.getElseBranch().accept(*this);
+    }
 }
 
 void ConcreteInterpreter::visit(BlockStatement& block)

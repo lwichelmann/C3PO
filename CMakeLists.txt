@@ -23,6 +23,7 @@ add_executable(C3PO
         include/expressions/VariableExpression.hpp
         src/expressions/VariableExpression.cpp
         src/visitor/ConcreteInterpreter.cpp
+        src/statements/IfStatement.cpp
 )
 
 

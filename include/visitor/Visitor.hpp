@@ -18,6 +18,7 @@ class ProgramStatement;
 class BinaryExpression;
 class VariableExpression;
 class PrintStatement;
+class IfStatement;
 
 class Visitor {
 public:
@@ -40,6 +41,7 @@ public:
     virtual void visit(PrintStatement &stmt) = 0;
 
     virtual RuntimeValue visit(VariableExpression &expr) = 0;
+    virtual void visit(IfStatement &stmt) = 0;
 };
 
 #endif //C3PO_VISITOR_HPP

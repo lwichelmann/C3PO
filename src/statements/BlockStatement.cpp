@@ -4,6 +4,10 @@
 #include "statements/BlockStatement.hpp"
 
 
+BlockStatement::BlockStatement(std::vector<std::unique_ptr<Statement>> statements) : statements(std::move(statements))
+{
+}
+
 void BlockStatement::accept(Visitor& visitor)
 {
     visitor.visit(*this);

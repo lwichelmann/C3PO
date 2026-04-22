@@ -3,25 +3,10 @@ var b = 21 * 2 + 42;
 var c = 42;
 var isEven = false;
 var isOdd = true;
-
-print(a);
-print("here i am ");
-print(42+42*2);
-
-var x = 10;
-print("Vor dem Block:");
-print(x);
-
-{
-    var x = 99;
-    var y = 50;
-    print("Im Block (x):");
-    print(x);
-    print("Im Block (y):");
-    print(y);
+if(isOdd){
+print("if fall");
 }
-
-print("Nach dem Block (x):");
-print(x);
-print(isEven);
-print(isOdd);
+else
+{
+print("else fall");
+}

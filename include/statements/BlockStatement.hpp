@@ -15,7 +15,7 @@ class BlockStatement: public Statement
     std::vector<std::unique_ptr<Statement>> statements;
 
 public:
-    BlockStatement(std::vector<std::unique_ptr<Statement>> statements) : statements(std::move(statements)) {}
+    explicit BlockStatement(std::vector<std::unique_ptr<Statement>> statements);
     void accept(Visitor& visitor) override;
     std::string toString() const override;
     const std::vector<std::unique_ptr<Statement>>& getStatements() const;

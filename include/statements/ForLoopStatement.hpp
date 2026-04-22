@@ -15,7 +15,7 @@ class ForLoopStatement : public Statement {
     std::unique_ptr<BlockStatement> m_body;
 
 public:
-    ForLoopStatement(std::unique_ptr<BlockStatement> body);
+    explicit ForLoopStatement(std::unique_ptr<BlockStatement> body);
 
     void accept(Visitor &visitor) override;
 

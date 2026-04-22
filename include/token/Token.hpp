@@ -28,6 +28,9 @@ enum class TokenType
     TRUE_LITERAL,
     FALSE_LITERAL,
 
+    IF,
+    ELSE,
+
     SEMICOLON,
     LEFT_PAREN,
     RIGHT_PAREN,

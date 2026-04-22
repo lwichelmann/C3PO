@@ -18,6 +18,7 @@ public:
     void visit(BlockStatement &block) override;
     void visit(FunctionDeclarationStatement &stmt) override;
     void visit(PrintStatement &stmt) override;
+    void visit(IfStatement& stmt) override;
     
     RuntimeValue visit(LiteralExpression &stmt) override;
     RuntimeValue visit(BinaryExpression &stmt) override;

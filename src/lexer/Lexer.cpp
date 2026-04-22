@@ -44,7 +44,9 @@ std::map<std::string, TokenType> Lexer::buildKeywords()
         {"print", TokenType::PRINT},
         {"for", TokenType::FOR_LOOP},
         {"true", TokenType::TRUE_LITERAL},
-        {"false", TokenType::FALSE_LITERAL}
+        {"false", TokenType::FALSE_LITERAL},
+        {"if", TokenType::IF},
+        {"else",TokenType::ELSE}
     };
 }
 

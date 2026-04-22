@@ -19,7 +19,7 @@ class VariableDeclarationStatement : public Statement
     std::unique_ptr<Expression> m_initializer;
 
 public:
-    VariableDeclarationStatement(const std::string& name, std::unique_ptr<Expression> m_initializer);
+    explicit VariableDeclarationStatement(const std::string& name, std::unique_ptr<Expression> m_initializer);
 
     void accept(Visitor& visitor) override;
     const std::string& getVariableName() const;
