@@ -3,7 +3,7 @@ var b = 21 * 2 + 42;
 var c = 42;
 var isEven = false;
 var isOdd = true;
-if(isOdd){
+if(true){
 print("if fall");
 }
 else

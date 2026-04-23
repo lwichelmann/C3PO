@@ -6,6 +6,14 @@
 
 void Lexer::advance()
 {
+    if (getCurrentChar() == '\n')
+    {
+        m_startColumn = 1;
+        m_startLine++;
+    }else
+    {
+        m_startColumn++;
+    }
     m_current++;
 }
 
@@ -32,7 +40,7 @@ char Lexer::peek(size_t offset) const
     return m_source[m_current + offset];
 }
 
-bool Lexer::isWhitespace(char c) const
+bool Lexer::isWhitespace(char c)
 {
     return c == ' ' || c == '\r' || c == '\t' || c == '\n';
 }
@@ -62,23 +70,30 @@ Token Lexer::scanIdentifierOrKeyword()
 {
     std::string name;
 
+    size_t line = m_startLine;
+    size_t column = m_startColumn;
+
     while (!isAtEnd() && std::isalnum(getCurrentChar()))
     {
         name += getCurrentChar();
         advance();
     }
 
+    size_t length = m_startColumn - column;
     if (m_keywords.contains(name))
     {
-        return Token(m_keywords.at(name), name);
+        return Token(m_keywords.at(name), name, line, column, length);
     }
 
-    return Token(TokenType::IDENTIFIER, name);
+    return Token(TokenType::IDENTIFIER, name, line, column, length);
 }
 
 Token Lexer::scanNumber()
 {
     std::string numberString;
+
+    size_t line = m_startLine;
+    size_t column = m_startColumn;
 
     while (!isAtEnd() && std::isdigit(getCurrentChar()))
     {
@@ -87,44 +102,51 @@ Token Lexer::scanNumber()
     }
 
     int number = std::stoi(numberString);
-
-    return Token(TokenType::NUMBER, number);
+    size_t length = m_startColumn - column;
+    return Token(TokenType::NUMBER, number, line, column,length);
 }
 
 Token Lexer::scanSymbol()
 {
+    size_t line = m_startLine;
+    size_t column = m_startColumn;
+
     char currentChar = getCurrentChar();
     advance();
 
+    size_t tokenLength = 1;
     switch (currentChar)
     {
     case '+':
-        return {TokenType::PLUS, "+"};
+        return {TokenType::PLUS, "+", line, column, tokenLength};
     case '-':
-        return {TokenType::MINUS, "-"};
+        return {TokenType::MINUS, "-", line, column,tokenLength};
     case '*':
-        return {TokenType::MULTIPLY, "*"};
+        return {TokenType::MULTIPLY, "*", line, column,tokenLength};
     case '/':
-        return {TokenType::DIVIDE, "/"};
+        return {TokenType::DIVIDE, "/", line, column,tokenLength};
     case ';':
-        return {TokenType::SEMICOLON, ";"};
+        return {TokenType::SEMICOLON, ";", line, column,tokenLength};
     case '=':
-        return {TokenType::EQUALS, "="};
+        return {TokenType::EQUALS, "=", line, column,tokenLength};
     case '(':
-        return {TokenType::LEFT_PAREN, "("};
+        return {TokenType::LEFT_PAREN, "(", line, column,tokenLength};
     case ')':
-        return {TokenType::RIGHT_PAREN, ")"};
+        return {TokenType::RIGHT_PAREN, ")", line, column,tokenLength};
     case '{':
-        return {TokenType::LEFT_BRACE, "{"};
+        return {TokenType::LEFT_BRACE, "{", line, column,tokenLength};
     case '}':
-        return {TokenType::RIGHT_BRACE, "}"};
+        return {TokenType::RIGHT_BRACE, "}", line, column,tokenLength};
     default:
-        return {TokenType::UNKNOWN, std::string(1, currentChar)};
+        return {TokenType::UNKNOWN, std::string(tokenLength, currentChar), line, column,tokenLength};
     }
 }
 
 Token Lexer::scanString()
 {
+    size_t line = m_startLine;
+    size_t column = m_startColumn;
+
     advance();
 
     std::string string;
@@ -140,9 +162,8 @@ Token Lexer::scanString()
     }
 
     advance();
-
-
-    return {TokenType::STRING, string};
+    size_t length = m_startColumn - column;
+    return {TokenType::STRING, string, line, column, length};
 }
 
 std::vector<Token> Lexer::lex()
@@ -178,7 +199,7 @@ std::vector<Token> Lexer::lex()
         }
     }
 
-    tokens.push_back(Token(TokenType::END_OF_FILE, ""));
+    tokens.push_back(Token(TokenType::END_OF_FILE, "", m_startLine, m_startColumn,0));
 
     return tokens;
 }

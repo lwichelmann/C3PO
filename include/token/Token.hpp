@@ -49,13 +49,16 @@ public:
 private:
     TokenType m_type;
     Value m_value;
+    size_t m_lineNumber;
+    size_t m_columnNumber;
+    size_t m_length;
 
 public:
-    Token(TokenType type, std::string value);
+    Token(TokenType type, std::string value, size_t lineNumber, size_t columnNumber, size_t m_length);
 
-    Token(TokenType type, int value);
+    Token(TokenType type, int value, size_t lineNumber, size_t columnNumber, size_t m_length);
 
-    explicit Token(TokenType type);
+    explicit Token(TokenType type, size_t lineNumber, size_t columnNumber, size_t m_length);
 
 
     [[nodiscard]] TokenType getType() const;
@@ -64,6 +67,11 @@ public:
     bool isLiteral() const;
 
     bool isOperator() const;
+
+    [[nodiscard]] size_t getLineNumber() const;
+
+    [[nodiscard]] size_t getColumnNumber() const;
+    [[nodiscard]] size_t getLength() const;
 
     static std::string typeToString(TokenType type);
 

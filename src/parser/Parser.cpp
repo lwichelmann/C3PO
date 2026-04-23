@@ -4,6 +4,7 @@
 
 #include "../../include/parser/Parser.hpp"
 
+#include <format>
 #include <iostream>
 
 #include "BinaryExpression.hpp"
@@ -205,9 +206,23 @@ Token Parser::consume(TokenType type)
 
     if (type != TokenType::END_OF_FILE && token.getType() != type)
     {
+        size_t errorLine = token.getLineNumber();
+        size_t errorColumn = token.getColumnNumber();
+
+        if (m_current > 0)
+        {
+            Token previousToken = m_tokens[m_current - 1];
+            errorLine = previousToken.getLineNumber();
+            errorColumn = previousToken.getColumnNumber() + previousToken.getLength();
+        }
+
         throw std::runtime_error(
-            "Expected token type " + Token::typeToString(type) + " but got " + Token::typeToString(token.getType()));
+            "Expected token type " + Token::typeToString(type) +
+            " but got " + Token::typeToString(token.getType()) +
+            std::format(" at line {} column {}", errorLine, errorColumn)
+        );
     }
+
     m_current++;
     return token;
 }

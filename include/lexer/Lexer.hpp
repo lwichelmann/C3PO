@@ -17,12 +17,14 @@ private:
     std::string m_source;
     size_t m_current = 0;
     std::map<std::string, TokenType> m_keywords;
+    size_t m_startLine = 1;
+    size_t m_startColumn = 1;
 
     void advance();
     bool isAtEnd() const;
-    char getCurrentChar() const;
+    [[nodiscard]] char getCurrentChar() const;
     char peek(size_t offset = 1) const;
-    bool isWhitespace(char c) const;
+    static bool isWhitespace(char c) ;
 
     void skipWhitespace();
     Token scanIdentifierOrKeyword();

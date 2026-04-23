@@ -6,32 +6,24 @@
 
 #include <algorithm>
 #include <string>
-/*public:
-Token(TokenType type, std::string value)
-: m_type(type), m_value(std::move(value))
+
+Token::Token(TokenType type, std::string value, size_t lineNumber, size_t columnNumber, size_t length) : m_type(type),
+    m_value(std::move(value)),
+    m_lineNumber(lineNumber), m_columnNumber(columnNumber), m_length(length)
 {
 }
 
-Token(TokenType type, int value)
-: m_type(type), m_value(value)
+Token::Token(TokenType type, int value, size_t lineNumber, size_t columnNumber, size_t length) : m_type(type),
+    m_value(value),
+    m_lineNumber(lineNumber), m_columnNumber(columnNumber), m_length(length)
 {
 }
 
-explicit Token(TokenType type)
-: m_type(type), m_value("")
-{
-}*/
+Token::Token(TokenType type, size_t lineNumber, size_t columnNumber, size_t length) : m_type(type), m_value(""),
+    m_lineNumber(lineNumber),
+    m_columnNumber(columnNumber),
+    m_length(length)
 
-
-Token::Token(TokenType type, std::string value) : m_type(type), m_value(std::move(value))
-{
-}
-
-Token::Token(TokenType type, int value) : m_type(type), m_value(value)
-{
-}
-
-Token::Token(TokenType type) : m_type(type), m_value("")
 {
 }
 
@@ -57,6 +49,21 @@ bool Token::isOperator() const
     return m_type == TokenType::PLUS ||
         m_type == TokenType::MINUS ||
         m_type == TokenType::EQUALS;
+}
+
+size_t Token::getLineNumber() const
+{
+    return m_lineNumber;
+}
+
+size_t Token::getColumnNumber() const
+{
+    return m_columnNumber;
+}
+
+size_t Token::getLength() const
+{
+    return m_length;
 }
 
 std::string Token::typeToString(TokenType type)
