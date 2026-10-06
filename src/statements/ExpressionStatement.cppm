@@ -2,17 +2,13 @@
 // Created by leonw on 04.06.2026.
 //
 
-#ifndef C3PO_EXPRESSIONSTATEMENT_HPP
-#define C3PO_EXPRESSIONSTATEMENT_HPP
-#include <memory>
+export module ast:expression_statement;
+import std;
+import :visitor;
+import :statement;
+import :expression;
 
-#include "Statement.hpp"
-#include "visitor/Visitor.hpp"
-#include "../expressions/Expression.hpp"
-
-class Expression;
-
-class ExpressionStatement : public Statement {
+export class ExpressionStatement : public Statement {
 private:
     std::unique_ptr<Expression> m_expression;
 public:
@@ -21,5 +17,3 @@ public:
     void accept(Visitor& visitor) override;
     [[nodiscard]] std::string toString() const override;
 };
-
-#endif //C3PO_EXPRESSIONSTATEMENT_HPP

@@ -2,13 +2,8 @@
 // Created by leonw on 04.06.2026.
 //
 
-
-#include "../../include/statements/ExpressionStatement.hpp"
-
-#include <algorithm>
-#include <memory>
-
-#include "Expression.hpp"
+module ast;
+import std;
 
 ExpressionStatement::ExpressionStatement(std::unique_ptr<Expression> expression) : m_expression(std::move(expression))
 {

@@ -2,28 +2,23 @@
 // Created by leonw on 25.09.2025.
 //
 
-#ifndef C3PO_LEXER_HPP
-#define C3PO_LEXER_HPP
+export module lexer;
+import std;
+import token;
 
-#include <iostream>
-#include <map>
-#include <string>
-#include <vector>
-#include "../token/Token.hpp"
-
-class Lexer
+export class Lexer
 {
 private:
     std::string m_source;
-    size_t m_current = 0;
+    std::size_t m_current = 0;
     std::map<std::string, TokenType> m_keywords;
-    size_t m_startLine = 1;
-    size_t m_startColumn = 1;
+    std::size_t m_startLine = 1;
+    std::size_t m_startColumn = 1;
 
     void advance();
     bool isAtEnd() const;
     [[nodiscard]] char getCurrentChar() const;
-    char peek(size_t offset = 1) const;
+    char peek(std::size_t offset = 1) const;
     static bool isWhitespace(char c) ;
 
     void skipWhitespace();
@@ -44,6 +39,3 @@ public:
 
     std::vector<Token> lex();
 };
-
-
-#endif //C3PO_LEXER_HPP

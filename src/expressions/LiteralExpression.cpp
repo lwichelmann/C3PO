@@ -2,9 +2,9 @@
 // Created by Leon on 04.04.2026.
 //
 
-#include "../include/expressions/LiteralExpression.hpp"
-
-#include <memory>
+module ast;
+import std;
+import token;
 
 LiteralExpression::LiteralExpression(int value) : m_value(value), m_tokenType(TokenType::NUMBER)
 {
@@ -17,7 +17,6 @@ LiteralExpression::LiteralExpression(std::string value) : m_value(value), m_toke
 LiteralExpression::LiteralExpression(bool value) : m_value(value), m_tokenType(value ? TokenType::TRUE_LITERAL : TokenType::FALSE_LITERAL)
 {
 }
-
 
 std::string LiteralExpression::toString() const
 {

@@ -1,8 +1,10 @@
 //
 // Created by leonw on 25.09.2025.
 //
-#include "../../include/lexer/Lexer.hpp"
-#include "../../include/token/Token.hpp"
+
+module lexer;
+import std;
+import token;
 
 void Lexer::advance()
 {
@@ -31,7 +33,7 @@ char Lexer::getCurrentChar() const
     return m_source[m_current];
 }
 
-char Lexer::peek(size_t offset) const
+char Lexer::peek(std::size_t offset) const
 {
     if (m_current + offset >= m_source.length())
     {
@@ -72,8 +74,8 @@ Token Lexer::scanIdentifierOrKeyword()
 {
     std::string name;
 
-    size_t line = m_startLine;
-    size_t column = m_startColumn;
+    std::size_t line = m_startLine;
+    std::size_t column = m_startColumn;
 
     while (!isAtEnd() && std::isalnum(getCurrentChar()))
     {
@@ -81,7 +83,7 @@ Token Lexer::scanIdentifierOrKeyword()
         advance();
     }
 
-    size_t length = m_startColumn - column;
+    std::size_t length = m_startColumn - column;
     if (m_keywords.contains(name))
     {
         return Token(m_keywords.at(name), name, line, column, length);
@@ -94,8 +96,8 @@ Token Lexer::scanNumber()
 {
     std::string numberString;
 
-    size_t line = m_startLine;
-    size_t column = m_startColumn;
+    std::size_t line = m_startLine;
+    std::size_t column = m_startColumn;
 
     while (!isAtEnd() && std::isdigit(getCurrentChar()))
     {
@@ -104,19 +106,19 @@ Token Lexer::scanNumber()
     }
 
     int number = std::stoi(numberString);
-    size_t length = m_startColumn - column;
+    std::size_t length = m_startColumn - column;
     return Token(TokenType::NUMBER, number, line, column,length);
 }
 
 Token Lexer::scanSymbol()
 {
-    size_t line = m_startLine;
-    size_t column = m_startColumn;
+    std::size_t line = m_startLine;
+    std::size_t column = m_startColumn;
 
     char currentChar = getCurrentChar();
     advance();
 
-    size_t tokenLength = 1;
+    std::size_t tokenLength = 1;
     switch (currentChar)
     {
     case '+':
@@ -146,8 +148,8 @@ Token Lexer::scanSymbol()
 
 Token Lexer::scanString()
 {
-    size_t line = m_startLine;
-    size_t column = m_startColumn;
+    std::size_t line = m_startLine;
+    std::size_t column = m_startColumn;
 
     advance();
 
@@ -164,7 +166,7 @@ Token Lexer::scanString()
     }
 
     advance();
-    size_t length = m_startColumn - column;
+    std::size_t length = m_startColumn - column;
     return {TokenType::STRING, string, line, column, length};
 }
 

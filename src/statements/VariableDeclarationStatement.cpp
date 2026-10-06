@@ -2,7 +2,8 @@
 // Created by leonw on 05.10.2025.
 //
 
-#include "../../include/statements/VariableDeclarationStatement.hpp"
+module ast;
+import std;
 
 VariableDeclarationStatement::VariableDeclarationStatement(const std::string& name, std::unique_ptr<Expression> m_initializer) :
     m_variableName(name),
@@ -24,11 +25,8 @@ const std::unique_ptr<Expression>& VariableDeclarationStatement::getExpression()
     return m_initializer;
 }
 
-
 std::string VariableDeclarationStatement::toString() const
 {
     std::string value = m_initializer ? m_initializer->toString() : "uninitialized";
     return "VariableDeclarationStatement(" + m_variableName + " = " + value + ")";
 }
-
-

@@ -2,8 +2,8 @@
 // Created by leonw on 14.06.2026.
 //
 
-#include "../../include/statements/ImportStatement.hpp"
-#include "../../include/visitor/Visitor.hpp"
+module ast;
+import std;
 
 ImportStatement::ImportStatement(std::string filePath)
     : m_filePath(std::move(filePath))

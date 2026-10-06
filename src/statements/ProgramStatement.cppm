@@ -2,15 +2,12 @@
 // Created by leonw on 23.01.2026.
 //
 
-#ifndef C3PO_PROGRAM_HPP
-#define C3PO_PROGRAM_HPP
-#include <memory>
-#include <vector>
+export module ast:program_statement;
+import std;
+import :visitor;
+import :statement;
 
-#include "Statement.hpp"
-#include "visitor/Visitor.hpp"
-
-class ProgramStatement : public Statement
+export class ProgramStatement : public Statement
 {
     std::vector<std::unique_ptr<Statement>> m_statements;
 
@@ -39,5 +36,3 @@ public:
         return m_statements;
     }
 };
-
-#endif //C3PO_PROGRAM_HPP

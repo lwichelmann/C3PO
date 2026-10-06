@@ -2,16 +2,13 @@
 // Created by leonw on 17.01.2026.
 //
 
-#ifndef C3PO_FORLOOPSTATEMENT_HPP
-#define C3PO_FORLOOPSTATEMENT_HPP
-#include <memory>
-#include <vector>
-#include <string>
+export module ast:for_loop_statement;
+import std;
+import :visitor;
+import :statement;
+import :block_statement;
 
-#include "BlockStatement.hpp"
-#include "Statement.hpp"
-
-class ForLoopStatement : public Statement {
+export class ForLoopStatement : public Statement {
     std::unique_ptr<BlockStatement> m_body;
 
 public:
@@ -23,5 +20,3 @@ public:
 
     std::unique_ptr<BlockStatement> &getBody();
 };
-
-#endif //C3PO_FORLOOPSTATEMENT_HPP

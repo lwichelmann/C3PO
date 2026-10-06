@@ -2,14 +2,11 @@
 // Created by leonw on 10.01.2026.
 //
 
-#ifndef C3PO_STATEMENT_HPP
-#define C3PO_STATEMENT_HPP
-#include <string>
+export module ast:statement;
+import std;
+import :visitor;
 
-#include "Visitor.hpp"
-
-
-class Statement {
+export class Statement {
 public:
     virtual ~Statement() = default;
 
@@ -17,6 +14,3 @@ public:
 
     virtual void accept(Visitor &visitor) = 0;
 };
-
-
-#endif //C3PO_STATEMENT_HPP

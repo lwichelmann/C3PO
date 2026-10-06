@@ -1,8 +1,9 @@
 //
 // Created by leonw on 08.03.2026.
 //
-#include "statements/BlockStatement.hpp"
 
+module ast;
+import std;
 
 BlockStatement::BlockStatement(std::vector<std::unique_ptr<Statement>> statements) : statements(std::move(statements))
 {

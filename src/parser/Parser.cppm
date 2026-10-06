@@ -2,19 +2,12 @@
 // Created by leonw on 05.10.2025.
 //
 
-#ifndef C3PO_PARSER_HPP
-#define C3PO_PARSER_HPP
-#include <vector>
+export module parser;
+import std;
+import token;
+import ast;
 
-#include "../token/Token.hpp"
-#include "../statements/BlockStatement.hpp"
-#include "../statements/ForLoopStatement.hpp"
-#include "../statements/ProgramStatement.hpp"
-#include "../statements/Statement.hpp"
-#include "../statements/FunctionDeclarationStatement.hpp"
-#include "../expressions/Expression.hpp"
-
-class Parser
+export class Parser
 {
 private:
     std::vector<Token> m_tokens;
@@ -45,6 +38,3 @@ public:
     std::unique_ptr<Expression> parseUnary();
 
 };
-
-
-#endif //C3PO_PARSER_HPP

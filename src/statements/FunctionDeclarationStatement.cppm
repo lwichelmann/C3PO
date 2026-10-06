@@ -2,20 +2,13 @@
 // Created by leonw on 15.03.2026.
 //
 
-#ifndef C3PO_FUNCTIONDECLARATIONSTATEMENT_HPP
-#define C3PO_FUNCTIONDECLARATIONSTATEMENT_HPP
-#include <memory>
-#include <string>
-#include "Statement.hpp"
-#include "../token/Token.hpp"
-#include "BlockStatement.hpp"
-#include "../include//visitor/Visitor.hpp"
+export module ast:function_declaration_statement;
+import std;
+import :visitor;
+import :statement;
+import :block_statement;
 
-
-class Visitor;
-class BlockStatement;
-
-class FunctionDeclarationStatement: public Statement
+export class FunctionDeclarationStatement: public Statement
 {
 public:
     explicit FunctionDeclarationStatement(const std::string& functionName, const std::shared_ptr<BlockStatement>& block_statement);
@@ -30,8 +23,4 @@ private:
     std::string m_functionName;
     std::shared_ptr<BlockStatement> m_blockStatement;
 
-
-
 };
-#endif //C3PO_FUNCTIONDECLARATIONSTATEMENT_HPP
-

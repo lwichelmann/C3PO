@@ -2,8 +2,8 @@
 // Created by leonw on 07.05.2026.
 //
 
-#include "../../include/expressions/FunctionCallExpression.hpp"
-#include "../../include/visitor/Visitor.hpp"
+module ast;
+import std;
 
 FunctionCallExpression::FunctionCallExpression(std::string functionName)
     : m_functionName(std::move(functionName))

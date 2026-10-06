@@ -1,16 +1,8 @@
-#ifndef C3PO_CONCRETEINTERPRETER_HPP
-#define C3PO_CONCRETEINTERPRETER_HPP
+export module interpreter;
+import std;
+import ast;
 
-#include <filesystem>
-
-#include "visitor/Visitor.hpp"
-#include <map>
-#include <string>
-#include <vector>
-
-class FunctionCallExpression;
-
-class ConcreteInterpreter : public Visitor {
+export class ConcreteInterpreter : public Visitor {
 private:
     std::vector<std::map<std::string, RuntimeValue>> m_environmentStack;
     std::map<std::string, std::reference_wrapper<FunctionDeclarationStatement>> m_functions;
@@ -37,5 +29,3 @@ public:
 
     void printVariables() const;
 };
-
-#endif //C3PO_CONCRETEINTERPRETER_HPP

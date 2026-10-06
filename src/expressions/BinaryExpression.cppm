@@ -2,14 +2,13 @@
 // Created by Leon on 12.04.2026.
 //
 
-#ifndef C3PO_BINARYEXPRESSION_HPP
-#define C3PO_BINARYEXPRESSION_HPP
-#include <memory>
+export module ast:binary_expression;
+import std;
+import token;
+import :visitor;
+import :expression;
 
-#include "Expression.hpp"
-#include "token/Token.hpp"
-
-class BinaryExpression : public Expression {
+export class BinaryExpression : public Expression {
 private:
     std::unique_ptr<Expression> m_left_expression;
     TokenType m_op;
@@ -25,5 +24,3 @@ public:
     const std::unique_ptr<Expression>& getRight() const;
 
 };
-
-#endif //C3PO_BINARYEXPRESSION_HPP

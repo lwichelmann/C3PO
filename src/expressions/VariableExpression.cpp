@@ -2,8 +2,8 @@
 // Created by Leon on 20.04.2026.
 //
 
-#include "VariableExpression.hpp"
-#include "../include/visitor/Visitor.hpp"
+module ast;
+import std;
 
 VariableExpression::VariableExpression(std::string name)
     : m_name(std::move(name)) {

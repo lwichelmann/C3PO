@@ -1,29 +1,22 @@
-//
-// Created by leonw on 15.03.2026.
-//
+module token;
+import std;
 
-#include "token/Token.hpp"
-
-#include <algorithm>
-#include <string>
-
-Token::Token(TokenType type, std::string value, size_t lineNumber, size_t columnNumber, size_t length) : m_type(type),
+Token::Token(TokenType type, std::string value, std::size_t lineNumber, std::size_t columnNumber, std::size_t length) : m_type(type),
     m_value(std::move(value)),
     m_lineNumber(lineNumber), m_columnNumber(columnNumber), m_length(length)
 {
 }
 
-Token::Token(TokenType type, int value, size_t lineNumber, size_t columnNumber, size_t length) : m_type(type),
+Token::Token(TokenType type, int value, std::size_t lineNumber, std::size_t columnNumber, std::size_t length) : m_type(type),
     m_value(value),
     m_lineNumber(lineNumber), m_columnNumber(columnNumber), m_length(length)
 {
 }
 
-Token::Token(TokenType type, size_t lineNumber, size_t columnNumber, size_t length) : m_type(type), m_value(""),
+Token::Token(TokenType type, std::size_t lineNumber, std::size_t columnNumber, std::size_t length) : m_type(type), m_value(""),
     m_lineNumber(lineNumber),
     m_columnNumber(columnNumber),
     m_length(length)
-
 {
 }
 
@@ -51,17 +44,17 @@ bool Token::isOperator() const
         m_type == TokenType::EQUALS;
 }
 
-size_t Token::getLineNumber() const
+std::size_t Token::getLineNumber() const
 {
     return m_lineNumber;
 }
 
-size_t Token::getColumnNumber() const
+std::size_t Token::getColumnNumber() const
 {
     return m_columnNumber;
 }
 
-size_t Token::getLength() const
+std::size_t Token::getLength() const
 {
     return m_length;
 }
@@ -77,22 +70,18 @@ std::string Token::typeToString(TokenType type)
     case TokenType::FALSE_LITERAL: return "FALSE";
     case TokenType::VAR: return "VAR";
     case TokenType::PRINT: return "PRINT";
-
     case TokenType::PLUS: return "+";
     case TokenType::MINUS: return "-";
     case TokenType::MULTIPLY: return "*";
     case TokenType::DIVIDE: return "/";
     case TokenType::EQUALS: return "=";
-
     case TokenType::SEMICOLON: return ";";
     case TokenType::LEFT_PAREN: return "(";
     case TokenType::RIGHT_PAREN: return ")";
     case TokenType::LEFT_BRACE: return "{";
     case TokenType::RIGHT_BRACE: return "}";
-
     case TokenType::UNKNOWN: return "UNKNOWN";
     case TokenType::END_OF_FILE: return "EOF";
-
     default: return "UNDEFINED";
     }
 }

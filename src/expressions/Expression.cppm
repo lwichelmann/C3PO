@@ -2,13 +2,11 @@
 // Created by leonw on 17.01.2026.
 //
 
-#ifndef C3PO_EXPRESSION_HPP
-#define C3PO_EXPRESSION_HPP
-#include <string>
-#include "visitor/Visitor.hpp"
-class Visitor;
+export module ast:expression;
+import std;
+import :visitor;
 
-class Expression
+export class Expression
 {
     public:
     virtual ~Expression() = default;
@@ -16,5 +14,3 @@ class Expression
     virtual RuntimeValue accept(Visitor &visitor) = 0;
 
 };
-
-#endif //C3PO_EXPRESSION_HPP

@@ -2,26 +2,13 @@
 // Created by Leon on 20.04.2026.
 //
 
-#include <iostream>
-#include <stdexcept>
-#include "../../include/visitor/ConcreteInterpreter.hpp"
-
-#include "../../include/statements/ExpressionStatement.hpp"
-#include "FunctionCallExpression.hpp"
-#include "IfStatement.hpp"
-#include "ImportStatement.hpp"
-#include "../../include/statements/ProgramStatement.hpp"
-#include "../../include/statements/VariableDeclarationStatement.hpp"
-#include "../../include/statements/ForLoopStatement.hpp"
-#include "../../include/statements/BlockStatement.hpp"
-#include "../../include/statements/FunctionDeclarationStatement.hpp"
-#include "../../include/statements/PrintStatement.hpp"
-#include "../../include/expressions/LiteralExpression.hpp"
-#include "../../include/expressions/BinaryExpression.hpp"
-#include "../../include/expressions/VariableExpression.hpp"
-#include "fileutil/FileUtil.hpp"
-#include "lexer/Lexer.hpp"
-#include "parser/Parser.hpp"
+module interpreter;
+import std;
+import token;
+import fileutil;
+import ast;
+import lexer;
+import parser;
 
 ConcreteInterpreter::ConcreteInterpreter(const std::string& basePath)
 {
@@ -92,7 +79,6 @@ void ConcreteInterpreter::visit(ImportStatement& stmt)
     std::filesystem::path currentDir = m_pathStack.back();
 
     std::filesystem::path combinedPath = currentDir / stmt.getFilePath();
-
 
     std::string path = combinedPath.string();
 

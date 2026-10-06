@@ -2,12 +2,12 @@
 // Created by leonw on 11.03.2026.
 //
 
-#include "ForLoopStatement.hpp"
+module ast;
+import std;
 
 ForLoopStatement::ForLoopStatement(std::unique_ptr<BlockStatement> body) : m_body(std::move(body))
 {
 }
-
 
 std::string ForLoopStatement::toString() const
 {

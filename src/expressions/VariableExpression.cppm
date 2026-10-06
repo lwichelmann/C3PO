@@ -2,16 +2,12 @@
 // Created by Leon on 20.04.2026.
 //
 
-#ifndef C3PO_VARIABLEEXPRESSION_HPP
-#define C3PO_VARIABLEEXPRESSION_HPP
+export module ast:variable_expression;
+import std;
+import :visitor;
+import :expression;
 
-#include "Expression.hpp"
-#include <string>
-
-#include "Expression.hpp"
-#include <string>
-
-class VariableExpression : public Expression {
+export class VariableExpression : public Expression {
 private:
     std::string m_name;
 
@@ -23,5 +19,3 @@ public:
     [[nodiscard]] std::string toString() const override;
     RuntimeValue accept(Visitor& visitor) override;
 };
-
-#endif //C3PO_VARIABLEEXPRESSION_HPP

@@ -2,23 +2,10 @@
 // Created by leonw on 05.10.2025.
 //
 
-#include "../../include/parser/Parser.hpp"
-
-#include <format>
-#include <iostream>
-
-#include "BinaryExpression.hpp"
-#include "../../include/statements/ExpressionStatement.hpp"
-#include "FunctionCallExpression.hpp"
-#include "FunctionDeclarationStatement.hpp"
-#include "IfStatement.hpp"
-#include "ImportStatement.hpp"
-#include "LiteralExpression.hpp"
-#include "../../include/statements/VariableDeclarationStatement.hpp"
-#include "statements/ForLoopStatement.hpp"
-#include "statements/ProgramStatement.hpp"
-#include "../../include/statements/PrintStatement.hpp"
-#include "VariableExpression.hpp"
+module parser;
+import std;
+import token;
+import ast;
 
 std::unique_ptr<BlockStatement> Parser::parseBlockStatement()
 {
@@ -246,8 +233,8 @@ Token Parser::consume(TokenType type)
 
     if (type != TokenType::END_OF_FILE && token.getType() != type)
     {
-        size_t errorLine = token.getLineNumber();
-        size_t errorColumn = token.getColumnNumber();
+        std::size_t errorLine = token.getLineNumber();
+        std::size_t errorColumn = token.getColumnNumber();
 
         if (m_current > 0)
         {

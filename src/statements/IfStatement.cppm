@@ -2,14 +2,13 @@
 // Created by leonw on 22.04.2026.
 //
 
-#ifndef C3PO_IFSTATEMENT_HPP
-#define C3PO_IFSTATEMENT_HPP
-#include <memory>
+export module ast:if_statement;
+import std;
+import :visitor;
+import :statement;
+import :expression;
 
-#include "Expression.hpp"
-#include "Statement.hpp"
-
-class IfStatement : public Statement
+export class IfStatement : public Statement
 {
     std::unique_ptr<Expression> m_condition;
     std::unique_ptr<Statement> m_thenBranch;
@@ -28,5 +27,3 @@ public:
     [[nodiscard]] bool hasElseBranch() const;
     [[nodiscard]] Statement& getElseBranch() const;;
 };
-
-#endif //C3PO_IFSTATEMENT_HPP

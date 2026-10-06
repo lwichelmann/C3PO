@@ -2,9 +2,8 @@
 // Created by leonw on 22.04.2026.
 //
 
-#include "IfStatement.hpp"
-
-#include "Expression.hpp"
+module ast;
+import std;
 
 IfStatement::IfStatement(std::unique_ptr<Statement> thenBranch, std::unique_ptr<Statement> elseBranch,
                          std::unique_ptr<Expression> condition) :
@@ -37,7 +36,6 @@ Statement& IfStatement::getElseBranch() const {
     }
     return *m_elseBranch;
 }
-
 
 std::string IfStatement::toString() const
 {

@@ -2,11 +2,12 @@
 // Created by leonw on 14.06.2026.
 //
 
-#ifndef C3PO_IMPORTSTATEMENT_HPP
-#define C3PO_IMPORTSTATEMENT_HPP
-#include "Statement.hpp"
+export module ast:import_statement;
+import std;
+import :visitor;
+import :statement;
 
-class ImportStatement : public Statement
+export class ImportStatement : public Statement
 {
 private:
     std::string m_filePath;
@@ -17,5 +18,3 @@ public:
     void accept(Visitor& visitor) override;
     [[nodiscard]] std::string toString() const override;
 };
-
-#endif //C3PO_IMPORTSTATEMENT_HPP
