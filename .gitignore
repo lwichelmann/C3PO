@@ -113,3 +113,5 @@ temp/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+conandata.yml
