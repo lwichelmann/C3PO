@@ -8,11 +8,12 @@ import lexer;
 import parser;
 import ast;
 import interpreter;
+import debug_server;
 
 
 int main(int argc, char* argv[])
 {
-   runAsioSmokeTest();
+  // runAsioSmokeTest();
 
     std::string filePath = "../src/source.txt";
     bool printAst = false;
@@ -52,6 +53,22 @@ int main(int argc, char* argv[])
     }
     std::filesystem::path absoluteFilePath = std::filesystem::absolute(filePath);
     std::string basePath = absoluteFilePath.parent_path().string();
+
+    DebugServer debugServer;
+    std::cout << "Starte C3PO Debug-Modus...\n";
+    debugServer.waitForConnection(5005);
+
+    //debugServer.sendLine("CODE:Test123");
+    debugServer.sendLine("CODE:" + content);
+
+    while (debugServer.isConnected()) {
+        std::string cmd = debugServer.receiveLine();
+        if (cmd == "PING") {
+            debugServer.sendLine("PONG");
+        } else if (cmd == "RESUME") {
+            break;
+        }
+    }
 
     ConcreteInterpreter interpreter {basePath};
     program->accept(interpreter);

@@ -10,7 +10,7 @@ import ast;
 import lexer;
 import parser;
 
-ConcreteInterpreter::ConcreteInterpreter(const std::string& basePath)
+ConcreteInterpreter::ConcreteInterpreter(const std::string& basePath,DebugServer* debugServer) : m_debugServer(debugServer)
 {
     m_environmentStack.push_back({});
 

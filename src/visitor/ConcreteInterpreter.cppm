@@ -1,6 +1,7 @@
 export module interpreter;
 import std;
 import ast;
+import debug_server;
 
 export class ConcreteInterpreter : public Visitor {
 private:
@@ -9,9 +10,10 @@ private:
 
     std::vector<std::filesystem::path> m_pathStack;
     std::vector<std::unique_ptr<ProgramStatement>> m_importedASTs;
+    DebugServer* m_debugServer;
 
 public:
-    explicit ConcreteInterpreter(const std::string& basePath);
+    explicit ConcreteInterpreter(const std::string& basePath,DebugServer* debugServer = nullptr);
     void visit(ProgramStatement &stmt) override;
     void visit(VariableDeclarationStatement &stmt) override;
     void visit(ForLoopStatement &stmt) override;
